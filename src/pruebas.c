@@ -6,25 +6,22 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:57:28 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/10/26 22:30:02 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:46:46 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include <unistd.h>
 #include "bmlib.h"
 
+static int	para_el_hijo(char **argv, char **path);
 static int	find_path(char **env);
 
 int	main(int argc, char **argv, char **env)
 {
 	int		i;
-	int		j;
 	char	**pather;
-	char	*tmp;
-	char	*tmp2;
 
 	(void)argv;
-	j = 0;
 	if (argc < 2)
 		return (write(1, "INPUT?\n", 7));
 	i = find_path(env);
@@ -36,26 +33,48 @@ int	main(int argc, char **argv, char **env)
 	i = 0;
 	while (pather[i])
 		ft_printf("String PATH: %s\n", pather[i++]);
-	i = 0;
-	j = access(argv[1], X_OK);
-	if (!j)
-		exit(0);
-	else
+	i = fork();
+	if (i < 0)
+		exit (0);
+	else if (i == 0)
 	{
-		tmp2 = ft_strjoin("/", argv[1]);
-		ft_printf("\nentro en el bucle\n");
-		while (j != 0 && pather[i])
-		{
-			tmp = ft_strjoin(pather[i++], tmp2);
-			ft_printf("dentro, string: %s\n", tmp);
-			j = access(tmp, F_OK);
-			free(tmp);
-		}
+		i = para_el_hijo(argv, pather);
+		if (i == -1)
+			return (ft_printf("\nHIJO: Nos han jodido padre!\n"));
+		else
+			return (ft_printf("\nHIJO: Tenemos visto bueno papa!, el indice es: %d\n\n", i));
 	}
-	exit (0);
+	else
+		ft_printf("\nPADRE: CONTESTAME PEQUE\n");
 }
 
 //	execve(argv[1], argv + 1, env);
+
+static int	para_el_hijo(char **argv, char **pather)
+{
+	char	*tmp;
+	char	*tmp2;
+	int		j;
+	int		i;
+
+	i = 0;
+	j = access(argv[1], X_OK);
+	if (!j)
+		return (1);
+	else
+	{
+		tmp2 = ft_strjoin("/", argv[1]);
+		while (j != 0 && pather[i])
+		{
+			tmp = ft_strjoin(pather[i++], tmp2);
+			j = access(tmp, F_OK);
+			free(tmp);
+		}
+		if (j == 0)
+			return (i);
+	}
+	return (-1);
+}
 
 static int	find_path(char **env)
 {
