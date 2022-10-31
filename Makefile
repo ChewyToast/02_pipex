@@ -6,12 +6,13 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/10/31 21:00:30 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/10/31 21:06:38 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 -include utls/defines.mk
 
 all:
+				@$(MAKE) -C $(MAKE_LIB)
 				@$(MAKE) $(NAME)
 
 clean:
@@ -33,7 +34,7 @@ re:
 
 
 $(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJ)
-				@$(GCC) $(FLAGS) $(OBJ) $(LIB) -o $(NAME)
+				$(GCC) $(FLAGS) $(OBJ) $(LIB) -o $(NAME)
 
 $(OBJ_DIR):
 				mkdir -p -m777 $(OBJ_DIR)
@@ -43,7 +44,7 @@ $(DEPS_DIR):
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(LIB) $(MKF)
 				$(GCC) $(FLAGS_MMD) -I $(MAKE_LIB) -c $< -o $@
-				@mv $(patsubst %.o, %.d, $@) $(DEP_DIR)/
+				@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
 
 $(LIB):
 				@$(MAKE) -C $(MAKE_LIB)
