@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:57:28 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/10/28 22:22:05 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:37:02 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -22,6 +22,7 @@ int	main(void)
 	if (!fork())
 	{
 		ft_printf("\nHIJO FD VALUE: %d\n", fd);
+		close(0);
 		close(fd);
 		if (read(fd, NULL, 0) == -1)
 			return (ft_printf("\nSOY EL HIJO Y ESTA CERRADO\n"));
@@ -31,11 +32,16 @@ int	main(void)
 	else
 	{
 		ft_printf("\nPADRE FD VALUE: %d\n", fd);
+		close(0);
 		usleep(500);
 		if (read(fd, NULL, 0) == -1)
 			return (ft_printf("\nSOY EL PADRE Y ESTA CERRADO\n"));
 		else
+		{
+			dup2(fd, 1);
+			close(1);
 			return (ft_printf("\nSOY EL PADRE Y ESTA ABIERTO\n"));
+		}
 	}
 }
 

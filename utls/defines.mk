@@ -6,48 +6,37 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/10/31 21:00:30 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/10/31 20:30:43 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
--include utls/defines.mk
 
-all:
-				@$(MAKE) $(NAME)
+NAME =		pipex
 
-clean:
-				@rm -rf $(OBJ_DIR)
-				@rm -rf $(DEPS_DIR)
+MKF =		Makefile
 
-fclean:
-				@$(MAKE) clean
-				@rm -f $(NAME)
+FILES =		pipex.c		\
+			input_parse.c
 
-fcleanall:
-				@$(MAKE) fclean -C $(MAKE_LIB)
-				@$(MAKE) clean
-				@rm -f $(NAME)
+MKF =		Makefile
 
-re:
-				@$(MAKE) fclean
-				@$(MAKE) all
+SRC =		$(addprefix $(SRC_DIR)/, $(FILES))
 
+OBJ =		$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
-$(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJ)
-				@$(GCC) $(FLAGS) $(OBJ) $(LIB) -o $(NAME)
+DEPS =		$(addprefix $(DEPS_DIR)/, $(FILES:.o=.d))
 
-$(OBJ_DIR):
-				mkdir -p -m777 $(OBJ_DIR)
+SRC_DIR =	src
 
-$(DEPS_DIR):
-				mkdir -p -m777 $(DEPS_DIR)
+OBJ_DIR =	.obj
 
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(LIB) $(MKF)
-				$(GCC) $(FLAGS_MMD) -I $(MAKE_LIB) -c $< -o $@
-				@mv $(patsubst %.o, %.d, $@) $(DEP_DIR)/
+DEPS_DIR =	.deps
 
-$(LIB):
-				@$(MAKE) -C $(MAKE_LIB)
+MAKE_LIB =	inc/bmlib/
 
--include $(DEPS)
+LIB =		inc/bmlib/bmlib.a
 
-.PHONY:		all clean fclean re
+GCC =		gcc
+
+FLAGS =		-Wall -Werror -Wextra -fsanitize=address
+
+FLAGS_MMD =	-Wall -Werror -Wextra -MMD -MP
