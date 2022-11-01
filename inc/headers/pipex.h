@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 15:51:51 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/01 20:32:05 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/01 15:55:30 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/01 20:34:41 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PIPEX_H
+# define PIPEX_H
+
 #include "pipex.h"
 #include "pipex_struct.h"
 #include "bmlib.h"
 
-/*
- This program consists of being able to execute and redirect programs
+# include <stdio.h>
 
- and their inputs and outputs, so the first part of main will consist
+# include <unistd.h>
 
- of checking that the files/directories and executables received as
+# include <fcntl.h>
 
- arguments are valid/accessible* and/or that they have the necessary
+int	parse_input(int argc, char **argv, char **env, t_pipex *pipex);
+char	*get_comand(char **all_path, char **argv);
+char	**get_path(char **env, char *path_compare);
+int	parse_comands(char **argv, t_pipex *pipex);
 
- execution permissions.
-*/
-
-int	main(int argc, char **argv, char **env)
-{
-	t_pipex	pipex;
-
-	if (!parse_input(argc, argv, env, &pipex))
-		exit (0);
-}
+#endif

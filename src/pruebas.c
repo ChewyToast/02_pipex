@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:57:28 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/10/31 17:37:02 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/01 18:31:05 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -17,7 +17,6 @@
 int	main(void)
 {
 	int	fd = open("prueba", O_RDWR);
-
 
 	if (!fork())
 	{

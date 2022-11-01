@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/10/31 21:06:38 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/01 15:54:27 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 -include utls/defines.mk
@@ -43,7 +43,7 @@ $(DEPS_DIR):
 				mkdir -p -m777 $(DEPS_DIR)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(LIB) $(MKF)
-				$(GCC) $(FLAGS_MMD) -I $(MAKE_LIB) -c $< -o $@
+				$(GCC) $(FLAGS_MMD) $(INCLUDE) -c $< -o $@
 				@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
 
 $(LIB):
@@ -51,4 +51,4 @@ $(LIB):
 
 -include $(DEPS)
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean fcleanall re

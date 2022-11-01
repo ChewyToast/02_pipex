@@ -14,8 +14,9 @@ NAME =		pipex
 
 MKF =		Makefile
 
-FILES =		pipex.c		\
-			input_parse.c
+FILES =		pipex.c			\
+			get_comand.c	\
+			parse_input.c
 
 MKF =		Makefile
 
@@ -34,6 +35,10 @@ DEPS_DIR =	.deps
 MAKE_LIB =	inc/bmlib/
 
 LIB =		inc/bmlib/bmlib.a
+
+INCLUDE =	-I inc/headers
+
+INCLUDE +=	-I inc/bmlib
 
 GCC =		gcc
 
