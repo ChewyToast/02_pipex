@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:53:20 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/01 20:54:03 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:04:21 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -28,9 +28,9 @@ static	int	ft_pipex_error(char *first, int errono);
 
 int	parse_input(int argc, char **argv, char **env, t_pipex *pipex)
 {
-	if (argc != 5)
-		return (ft_pipex_error("Error:", 158));
-	if (!check_files(*(argv + 1), *(argv + argc), pipex))
+	// if (argc != 5)
+	// 	return (ft_pipex_error("Error:", 158));
+	if (!check_files(*(argv + 1), *(argv + argc - 1), pipex))
 		return (0);
 	pipex->argc = argc;
 	pipex->path = get_path(env, "PATH=");
@@ -47,6 +47,8 @@ int	parse_input(int argc, char **argv, char **env, t_pipex *pipex)
 
 static int	check_files(char *inpf, char *outpf, t_pipex *pipex)
 {
+	ft_printf("\nINPF: <%s>\n", inpf);
+	ft_printf("\nOUTPF: <%s>\n", outpf);
 	if (access(inpf, F_OK) != 0)
 		return (ft_pipex_error(inpf, 0));
 	if (access(inpf, R_OK) != 0)
@@ -56,26 +58,33 @@ static int	check_files(char *inpf, char *outpf, t_pipex *pipex)
 	pipex->inpfd = open(inpf, O_RDONLY);
 	if (!pipex->inpfd)
 		return (ft_pipex_error(inpf, -3));
-	pipex->outfd = open(inpf, O_WRONLY | O_CREAT, 0666);
+	pipex->outfd = open(outpf, O_CREAT);
 	if (!pipex->outfd)
 	{
 		close (pipex->inpfd);
-		return (ft_pipex_error(outpf, 0));
+		return (ft_pipex_error(outpf, 1));
+	}
+	else
+	{
+		write(pipex->outfd, "asdf", 4);
 	}
 	return (1);
 }
 
 static	int	ft_pipex_error(char *first, int errono)
 {
-	if (errono == 0)
-		perror(0);
-	else if (errono == -1)
-		perror(" Path not found\n");
-	else if (errono == -2)
-		perror(" Error parsing the input\n");
-	else if (errono == -3)
-		perror(": File open error");
-	else
-		perror(strerror(errono));
+	(void)first;
+	(void)errono;
+	perror(first);
+	// if (errono == 0)
+	// 	perror(0);
+	// else if (errono == -1)
+	// 	perror(" Path not found\n");
+	// else if (errono == -2)
+	// 	perror(" Error parsing the input\n");
+	// else if (errono == -3)
+	// 	perror(": File open error");
+	// else
+	// 	perror(strerror(errono));
 	return (0);
 }
