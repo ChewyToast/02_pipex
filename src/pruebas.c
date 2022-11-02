@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 17:57:28 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/01 18:31:05 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/03 00:56:47 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -14,35 +14,36 @@
 #include <fcntl.h>
 #include "bmlib.h"
 
-int	main(void)
-{
-	int	fd = open("prueba", O_RDWR);
+// int	main(void)
+// {
+// 	int	fd;
 
-	if (!fork())
-	{
-		ft_printf("\nHIJO FD VALUE: %d\n", fd);
-		close(0);
-		close(fd);
-		if (read(fd, NULL, 0) == -1)
-			return (ft_printf("\nSOY EL HIJO Y ESTA CERRADO\n"));
-		else
-			return (ft_printf("\nSOY EL HIJO Y ESTA ABIERTO\n"));
-	}
-	else
-	{
-		ft_printf("\nPADRE FD VALUE: %d\n", fd);
-		close(0);
-		usleep(500);
-		if (read(fd, NULL, 0) == -1)
-			return (ft_printf("\nSOY EL PADRE Y ESTA CERRADO\n"));
-		else
-		{
-			dup2(fd, 1);
-			close(1);
-			return (ft_printf("\nSOY EL PADRE Y ESTA ABIERTO\n"));
-		}
-	}
-}
+// 	fd = open("prueba", O_RDWR);
+// 	if (!fork())
+// 	{
+// 		ft_printf("\nHIJO FD VALUE: %d\n", fd);
+// 		close(0);
+// 		close(fd);
+// 		if (read(fd, NULL, 0) == -1)
+// 			return (ft_printf("\nSOY EL HIJO Y ESTA CERRADO\n"));
+// 		else
+// 			return (ft_printf("\nSOY EL HIJO Y ESTA ABIERTO\n"));
+// 	}
+// 	else
+// 	{
+// 		ft_printf("\nPADRE FD VALUE: %d\n", fd);
+// 		close(0);
+// 		usleep(500);
+// 		if (read(fd, NULL, 0) == -1)
+// 			return (ft_printf("\nSOY EL PADRE Y ESTA CERRADO\n"));
+// 		else
+// 		{
+// 			dup2(fd, 1);
+// 			close(1);
+// 			return (ft_printf("\nSOY EL PADRE Y ESTA ABIERTO\n"));
+// 		}
+// 	}
+// }
 
 // static int	para_el_hijo(char **argv, char **path);
 // static int	find_path(char **env);
@@ -63,7 +64,7 @@ int	main(void)
 // 	if (argc < 2)
 // 		return (write(2, "INPUT?\n", 7));
 // 	pipes = malloc(sizeof(int) * 2);
-// 	if (pipe(pipes) == -1)//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Creamos pipe
+// 	if (pipe(pipes) == -1)//- - - - - - - - - - - - -- - - Creamos pipe
 // 		exit (write(2, "ERROR AL CREAR PIPES\n", 21));
 // 	else
 // 		ft_printf("\nPipe creado, puente entre: %d y %d\n", pipes[0], pipes[1]);
@@ -72,7 +73,7 @@ int	main(void)
 // 	close(0);
 // 	dup2(1, pipes[1]);
 // 	close(pipes[1]);
-// 	i = fork();//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Hacemos fork
+// 	i = fork();//- - - - - - - - - - - - - Hacemos fork
 // 	if (i < 0)
 // 		exit (0);
 // 	else if (i == 0)
@@ -82,11 +83,12 @@ int	main(void)
 // 		if (i == -1)
 // 			exit (ft_printf("\nCHILLDREN: daddy we are fucked up\n"));
 // 		else if (i == -2)
-// 			ejecutalo_hijo(argv[1], argv + 1, env, pipes);//- - - - - - - - - - - - - - - - - -"Dup2"
+// 			ejecutalo_hijo(argv[1], argv + 1, env, pipes);//- -- - -"Dup2"
 // 		else
 // 		{
 // 			tmp = ft_strjoin("/", argv[1]);
-// 			if (!ejecutalo_hijo(ft_strjoin(pather[i - 1], tmp), argv + 1, env, pipes)) //- - - "Dup2"
+// 			if (!ejecutalo_hijo(ft_strjoin(pather[i - 1], tmp), argv + 1,
+							//env, pipes))
 // 				exit (write(2, "ERROR AL EJECUTAR\n", 18));
 // 		}
 // 	}

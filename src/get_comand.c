@@ -6,18 +6,16 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:45:47 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/02 19:46:44 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/03 00:53:55 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
-#include "pipex_struct.h"
 #include "bmlib.h"
 
 static char	*get_comand_util(char *rtrn,
 				char *tmp, char **all_path, char **argv);
 
-// Here we get the array of strings of the possible PATHs for the commands.
-char	**get_path(char **env, char *path_compare)
+int	get_path(t_pipex *pipex, char **env, char *path_compare)
 {
 	while (*env)
 	{
@@ -26,52 +24,34 @@ char	**get_path(char **env, char *path_compare)
 		env++;
 	}
 	if (!*env)
-		return (NULL);
-	return (ft_split(*env + 5, ':' ));
+		return (ft_pipex_error("zsh:",
+				" PATH environment variable not found", 0));
+	pipex->path = ft_split(*env + 5, ':' );
+	if (!pipex->path)
+		return (ft_pipex_error("pipex:",
+				" error trying to allocate memory", 0));
+	return (1);
 }
 
-// Here we fill in the list of commands with their respective flags, to later
-// confirm if they can be executed
-int	parse_comands(char **argv, t_pipex *pipex)
+int	parse_comands_util(char **argv, t_pipex *pipex, t_cmds *s_tmp)
 {
 	int		tmp;
-	t_cmds	*s_tmp;
 
 	tmp = 0;
-	pipex->cmds = malloc(sizeof(t_cmds));
-	if (!pipex->cmds)
-		return (0);
-	pipex->cmds->flags = ft_split(*argv, 32);
-	// ft_printf("\nAFTER SPLIT, pipex->cmds->flags = <%s>\n", *pipex->cmds->flags);
-	if (!pipex->cmds->flags)
-		return (0);
-	pipex->cmds->cmd = *(pipex->cmds->flags++);
-	// ft_printf("\npipex->cmds->cmd = <%s>\n", pipex->cmds->cmd);
-	// ft_printf("\npipex->cmds->flags = <%s>\n", *pipex->cmds->flags);
-	s_tmp = pipex->cmds;
-	argv++;
 	while (tmp < pipex->argc - 4)
 	{
 		s_tmp->next = malloc(sizeof(t_cmds));
 		if (!s_tmp->next)
-		{
-//			ft_free_cmds(pipex->cmds);
 			return (0);
-		}
 		s_tmp = s_tmp->next;
 		s_tmp->next = NULL;
-		// ft_printf("\nHI, tmp: %d, pipex->argc - 1: %d\n", tmp, pipex->argc - 1);
 		s_tmp->flags = ft_split(*argv, 32);
 		if (!s_tmp->flags)
-		{
-//			ft_free_cmds(pipex->cmds);
 			return (0);
-		}
 		s_tmp->cmd = *(s_tmp->flags++);
 		argv++;
 		tmp++;
 	}
-	// ft_printf("\nFINISH\n");
 	return (1);
 }
 
