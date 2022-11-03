@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/02 19:43:41 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/03 01:35:16 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 -include utls/defines.mk
@@ -37,10 +37,10 @@ $(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJ)
 				$(GCC) $(FLAGS) $(OBJ) $(LIB) -o $(NAME)
 
 $(OBJ_DIR):
-				mkdir -p -m777 $(OBJ_DIR)
+				mkdir -p -m700 $(OBJ_DIR)
 
 $(DEPS_DIR):
-				mkdir -p -m777 $(DEPS_DIR)
+				mkdir -p -m700 $(DEPS_DIR)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(LIB) $(MKF)
 				$(GCC) $(FLAGS_MMD) $(INCLUDE) -c $< -o $@
