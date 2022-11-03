@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 15:51:51 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/03 00:53:56 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/03 21:16:36 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/03 21:52:09 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -21,8 +21,10 @@ int	main(int argc, char **argv, char **env)
 
 	ft_init_pipex(argc, &pipex);
 	if (!parse_input(argc, argv, env, &pipex))
-		return (ft_release_pipex(&pipex));
+		exit (ft_release_pipex(&pipex));
 	show_input(&pipex);
+	ft_release_pipex(&pipex);
+	exit (0);
 	return (0);
 }
 
@@ -41,22 +43,24 @@ static int	ft_release_pipex(t_pipex *pipex)
 		close(pipex->inpfd);
 	if (pipex->outfd)
 		close(pipex->outfd);
-	if (pipex->path)
-	{
-		while (*pipex->path)
-			free(*(pipex->path++));
-		free(pipex->path);
-	}
 	while (pipex->cmds)
 	{
 		if (pipex->cmds->cmd)
 			free(pipex->cmds->cmd);
-		while (pipex->cmds->flags)
+		pipex->cmds->cmd = NULL;
+		while (*pipex->cmds->flags)
+		{
 			if (*(pipex->cmds->flags))
-				free(*(pipex->cmds->flags++));
-		free(pipex->cmds->flags);
+				free(*(pipex->cmds->flags));
+			*(pipex->cmds->flags) = NULL;
+			pipex->cmds->flags++;
+		}
+		pipex->cmds->flags = NULL;
 		pipex->cmds = pipex->cmds->next;
 	}
+	if (pipex->cmds)
+		free(pipex->cmds);
+	pipex->cmds = NULL;
 	return (0);
 }
 

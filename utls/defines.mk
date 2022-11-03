@@ -15,7 +15,7 @@ NAME =		pipex
 MKF =		Makefile
 
 FILES =		pipex.c			\
-			get_comand.c	\
+			parse_comands.c	\
 			parse_input.c
 
 MKF =		Makefile
@@ -42,6 +42,6 @@ INCLUDE +=	-I inc/bmlib
 
 GCC =		gcc
 
-FLAGS =		-Wall -Werror -Wextra -fsanitize=address
+FLAGS =		-Wall -Werror -Wextra
 
 FLAGS_MMD =	-Wall -Werror -Wextra -MMD -MP

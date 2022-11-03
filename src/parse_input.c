@@ -6,13 +6,15 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:53:20 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/03 00:53:54 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/03 23:42:46 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
 #include "bmlib.h"
 
 static int	parse_files(char *inpf, char *outpf, t_pipex *pipex);
+static int	get_path(t_pipex *pipex, char **env, char *path_compare);
+static int	parse_comands(char **argv, t_pipex *pipex);
 
 /*
  Here we start the parsing of the input from the files, checking if they exist
@@ -37,20 +39,6 @@ int	parse_input(int argc, char **argv, char **env, t_pipex *pipex)
 	return (1);
 }
 
-int	parse_comands(char **argv, t_pipex *pipex)
-{
-	pipex->cmds = malloc(sizeof(t_cmds));
-	if (!pipex->cmds)
-		return (0);
-	pipex->cmds->flags = ft_split(*argv, 32);
-	if (!pipex->cmds->flags)
-		return (0);
-	pipex->cmds->cmd = *(pipex->cmds->flags++);
-	if (!parse_comands_util(++argv, pipex, pipex->cmds))
-		return (0);
-	return (1);
-}
-
 static int	parse_files(char *inpf, char *outpf, t_pipex *pipex)
 {
 	int	tmp;
@@ -69,6 +57,40 @@ static int	parse_files(char *inpf, char *outpf, t_pipex *pipex)
 	if (!pipex->outfd)
 		tmp = ft_pipex_error("zsh: error opening file: ", outpf, 1);
 	if (tmp)
+		return (0);
+	return (1);
+}
+
+static int	get_path(t_pipex *pipex, char **env, char *path_compare)
+{
+	while (*env)
+	{
+		if (!ft_strncmp(*env, path_compare, 5))
+			break ;
+		env++;
+	}
+	if (!*env)
+		return (ft_pipex_error("zsh:",
+				" PATH environment variable not found", 0));
+	pipex->path = ft_split(*env + 5, ':' );
+	if (!pipex->path)
+		return (ft_pipex_error("pipex:",
+				" error trying to allocate memory", 0));
+	return (1);
+}
+
+static int	parse_comands(char **argv, t_pipex *pipex)
+{
+	pipex->cmds = malloc(sizeof(t_cmds));
+	if (!pipex->cmds)
+		return (0);
+	pipex->cmds->flags = ft_split(*argv, 32);
+	if (!pipex->cmds->flags)
+		return (0);
+	pipex->cmds->cmd = *(pipex->cmds->flags++);
+	if (!fill_cmds(++argv, pipex, pipex->cmds))
+		return (0);
+	if (!parse_cmds(pipex))
 		return (0);
 	return (1);
 }
