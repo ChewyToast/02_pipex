@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:13:25 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/04 20:35:54 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/04 22:56:52 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	parse_input(char **argv, char **env, t_pipex *pipex)
 		return (0);
 	if (!get_path(pipex, env, "PATH="))
 		return (0);
-	ret = parse_first_part(*(argv + 1), pipex);
-	return (ret);
+	ret += parse_first_part(*(argv + 1), pipex);
+	return (ret > 1);
 }
 
 static int	get_argv(char **argv, t_pipex *pipex, t_cmds *tmp)
