@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_struct.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 15:55:30 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/04 19:45:37 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/04 17:49:40 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/04 19:19:31 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_STRUCT_H
+# define PIPEX_STRUCT_H
 
-# include <stdio.h>
+typedef struct s_pipex	t_pipex;
+typedef struct s_cmds	t_cmds;
 
-# include <unistd.h>
+struct s_cmds
+{
+	char	*cmd;
+	char	**flags;
+	t_cmds	*next;
+};
 
-# include <fcntl.h>
-
-# include "pipex_struct.h"
-
-//	--------pipex.c
-static int	init_pipex(int argc, t_pipex *pipex);
-
-//	--------parse_input.c
-int			parse_input(char **argv, char **env, t_pipex *pipex);
+struct s_pipex
+{
+	int		inpfd;
+	int		outfd;
+	int		argc;
+	int		error;
+	char	**path;
+	t_cmds	*cmds;
+};
 
 #endif

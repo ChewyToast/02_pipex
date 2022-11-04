@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:53:20 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/03 23:42:46 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/04 02:02:27 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -31,33 +31,28 @@ int	parse_input(int argc, char **argv, char **env, t_pipex *pipex)
 	if (argc != 5)
 		return (ft_pipex_error("zsh:", " Wrong number of parameters", 0));
 	if (!parse_files(*(argv + 1), *(argv + argc - 1), pipex))
-		return (0);
+		pipex->error = 1;
 	if (!get_path(pipex, env, "PATH="))
 		return (0);
 	if (!parse_comands(argv + 2, pipex))
-		return (ft_pipex_error("zsh:", " parse_comands error", 0));
+		return (0);
 	return (1);
 }
 
 static int	parse_files(char *inpf, char *outpf, t_pipex *pipex)
 {
-	int	tmp;
-
-	tmp = 0;
 	if (access(inpf, F_OK) != 0)
-		tmp = ft_pipex_error("zsh: no such file or directory: ", inpf, 1);
+		return (ft_pipex_error("zsh: no such file or directory: ", inpf, 1));
 	else if (access(inpf, R_OK) != 0)
-		tmp = ft_pipex_error("zsh: permission denied: ", inpf, 1);
+		return (ft_pipex_error("zsh: permission denied: ", inpf, 1));
 	if (access(outpf, F_OK) == 0 && access(outpf, W_OK) != 0)
-		tmp = ft_pipex_error("zsh: permission denied: ", outpf, 1);
+		return (ft_pipex_error("zsh: permission denied: ", outpf, 1));
 	pipex->inpfd = open(inpf, O_RDONLY);
 	if (!pipex->inpfd)
-		tmp = ft_pipex_error("zsh: error opening file: ", inpf, 1);
+		return (ft_pipex_error("zsh: error opening file: ", inpf, 1));
 	pipex->outfd = open(outpf, O_CREAT);
 	if (!pipex->outfd)
-		tmp = ft_pipex_error("zsh: error opening file: ", outpf, 1);
-	if (tmp)
-		return (0);
+		return (ft_pipex_error("zsh: error opening file: ", outpf, 1));
 	return (1);
 }
 

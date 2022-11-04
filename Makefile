@@ -6,14 +6,15 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/03 01:35:16 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/04 19:47:36 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 -include utls/defines.mk
 
 all:
-				@$(MAKE) -C $(MAKE_LIB)
-				@$(MAKE) $(NAME)
+				$(MAKE) -C $(MAKE_LIB)
+				$(MAKE) $(NAME)
 
 clean:
 				@rm -rf $(OBJ_DIR)
@@ -33,8 +34,8 @@ re:
 				@$(MAKE) all
 
 
-$(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJ)
-				$(GCC) $(FLAGS) $(OBJ) $(LIB) -o $(NAME)
+$(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJ_PIPEX) $(OBJ_PARSING)
+				$(GCC) $(FLAGS) $(OBJ_PIPEX) $(OBJ_PARSING) $(LIB) -o $(NAME)
 
 $(OBJ_DIR):
 				mkdir -p -m700 $(OBJ_DIR)
@@ -44,10 +45,14 @@ $(DEPS_DIR):
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(LIB) $(MKF)
 				$(GCC) $(FLAGS_MMD) $(INCLUDE) -c $< -o $@
-				@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
+				mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
+
+$(OBJ_DIR)/%.o:	$(SRC_DIR_PARSE)/%.c $(LIB) $(MKF)
+				$(GCC) $(FLAGS_MMD) $(INCLUDE) -c $< -o $@
+				mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
 
 $(LIB):
-				@$(MAKE) -C $(MAKE_LIB)
+				$(MAKE) -C $(MAKE_LIB)
 
 -include $(DEPS)
 

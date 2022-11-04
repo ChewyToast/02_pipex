@@ -1,47 +1,57 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    defines.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/10/31 20:30:43 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/04 18:10:30 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =		pipex
+NAME =				pipex
 
-MKF =		Makefile
+MKF =				Makefile
 
-FILES =		pipex.c			\
-			parse_comands.c	\
-			parse_input.c
+FILE_PIPEX =		pipex.c
 
-MKF =		Makefile
+FILES_PARSING =		parse_first_part.c	\
+					parse_input.c		\
+					parse_utils.c
 
-SRC =		$(addprefix $(SRC_DIR)/, $(FILES))
+MKF =				Makefile
 
-OBJ =		$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
+SRC_PIPEX =			$(addprefix $(SRC_DIR)/, $(FILE_PIPEX))
 
-DEPS =		$(addprefix $(DEPS_DIR)/, $(FILES:.o=.d))
+SRC_PARSING =		$(addprefix $(SRC_DIR_PARSE)/, $(FILES_PARSING))
 
-SRC_DIR =	src
+OBJ_PIPEX =			$(addprefix $(OBJ_DIR)/, $(FILE_PIPEX:.c=.o))
 
-OBJ_DIR =	.obj
+OBJ_PARSING =		$(addprefix $(OBJ_DIR)/, $(FILES_PARSING:.c=.o))
 
-DEPS_DIR =	.deps
+DEPS_PIPEX =		$(addprefix $(DEPS_DIR)/, $(FILES:.o=.d))
 
-MAKE_LIB =	inc/bmlib/
+DEPS_PARSING =		$(addprefix $(DEPS_DIR)/, $(FILES_PARSING:.o=.d))
 
-LIB =		inc/bmlib/bmlib.a
+SRC_DIR =			src
 
-INCLUDE =	-I inc/headers
+SRC_DIR_PARSE =		src/parsing
 
-INCLUDE +=	-I inc/bmlib
+OBJ_DIR =			.obj
 
-GCC =		gcc
+DEPS_DIR =			.deps
 
-FLAGS =		-Wall -Werror -Wextra
+MAKE_LIB =			inc/bmlib/
 
-FLAGS_MMD =	-Wall -Werror -Wextra -MMD -MP
+LIB =				inc/bmlib/bmlib.a
+
+INCLUDE =			-I inc/headers
+
+INCLUDE +=			-I inc/bmlib
+
+GCC =				gcc
+
+FLAGS =				-Wall -Werror -Wextra
+
+FLAGS_MMD =			-Wall -Werror -Wextra -MMD -MP

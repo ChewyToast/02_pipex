@@ -6,14 +6,15 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:27:31 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/03 23:50:01 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/04 17:17:19 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+
 #include "bmlib.h"
 
 static int	exsist_cmds(t_pipex *pipex, char **paths);
 static char	*exsist_cmds_utils(char **paths, char *cmd);
+static int	permis_cmds(t_pipex *pipex);
 
 int	fill_cmds(char **argv, t_pipex *pipex, t_cmds *s_tmp)
 {
@@ -40,6 +41,8 @@ int	fill_cmds(char **argv, t_pipex *pipex, t_cmds *s_tmp)
 int	parse_cmds(t_pipex *pipex)
 {
 	if (!exsist_cmds(pipex, pipex->path))
+		return (0);
+	if (!permis_cmds(pipex))
 		return (0);
 	return (1);
 }
@@ -80,5 +83,22 @@ static char	*exsist_cmds_utils(char **paths, char *cmd)
 		free(tmp);
 		paths++;
 	}
+	ft_pipex_error("zsh: command not found: ", cmd + 1, 0);
 	return (NULL);
+}
+
+static int	permis_cmds(t_pipex *pipex)
+{
+	t_cmds	*tmp;
+	int		ret;
+
+	tmp = pipex->cmds;
+	ret = 1;
+	while (tmp)
+	{
+		if (access(tmp->cmd, X_OK))
+			ret = ft_pipex_error("zsh: permision deneied: ", tmp->cmd, 0);
+		tmp = tmp->next;
+	}
+	return (ret);
 }

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   parse_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 15:55:30 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/04 19:45:37 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/04 17:48:54 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/04 20:49:52 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PARSE_UTILS_H
+# define PARSE_UTILS_H
 
 # include <stdio.h>
 
@@ -21,10 +21,14 @@
 
 # include "pipex_struct.h"
 
-//	--------pipex.c
-static int	init_pipex(int argc, t_pipex *pipex);
-
 //	--------parse_input.c
-int			parse_input(char **argv, char **env, t_pipex *pipex);
+int			ft_pipex_error(char *first, char *second, int ret);
+
+//	--------parse_first_part.c
+int			parse_first_part(char *file, t_pipex *pipex);
+
+//	--------parse_utils.c
+int			ft_check_file(char *file, int mode);
+int			ft_check_cmd(t_pipex *pipex, char **path);
 
 #endif
