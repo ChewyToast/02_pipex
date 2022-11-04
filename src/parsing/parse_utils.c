@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:43:00 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/04 20:59:20 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/04 22:56:33 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	first_check_cmd_util(t_pipex *pipex)
 	if (!access(pipex->cmds->cmd, X_OK))
 		return (1);
 	ft_pipex_error("bash: permission denied: ", pipex->cmds->cmd, 0);
-	return (1);
+	return (0);
 }
 
 static int	second_check_cmd_util(t_pipex *pipex, char **path, char *comnd)
@@ -98,5 +98,5 @@ static int	end_check_cmd(char *str2, char *str3, int ret)
 		free(str2);
 	if (str3)
 		free(str3);
-	return (0);
+	return (ret);
 }
