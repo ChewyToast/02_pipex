@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 23:12:24 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 03:52:01 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/05 04:05:34 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,20 @@ int	parse_second_part(t_pipex *pipex)
 	i = 0;
 	while (i < pipex->argc - 5)
 	{
+		pipex->cmds = pipex->cmds->next;
 		pid = fork();
 		if (pid < 0)
 			return (ft_pipex_error(NULL, "bash:",
 					" error creating first fork()", 0));
 		if (!pid)
 		{
-			ft_printf("pipex->cmds->next, pipex->argc - 3: %s\n", (get_cmd(pipex->cmds->next, pipex->argc - 3))->cmd);
-			if (!ft_check_cmd(get_cmd(pipex->cmds->next, i), pipex->path))
+			if (!ft_check_cmd(pipex->cmds, pipex->path))
 				exit (0);
 			exit (1);
 		}
-		else
-		{
-			waitpid(pid, &status, 0);
-			pipex->util += WEXITSTATUS(status);
-		}
+		waitpid(pid, &status, 0);
+		pipex->util += WEXITSTATUS(status);
 		i++;
 	}
 	return (pipex->util == i);
-}
-
-t_cmds	*get_cmd(t_cmds *start, int i)
-{
-	while (i && start)
-	{
-		start = start->next;
-		i++;
-	}
-	return (start);
 }

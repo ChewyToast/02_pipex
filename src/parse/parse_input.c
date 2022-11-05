@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:13:25 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 03:50:15 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/05 04:05:44 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ int	parse_input(char **argv, char **env, t_pipex *pipex)
 		return (0);
 	if (!get_path(pipex, env, "PATH="))
 		return (0);
-	ft_printf("*(argv + 1: %s\n", *(argv + 1));
 	ret += parse_first_part(*(argv + 1), pipex);
 	ret += parse_second_part(pipex);
-	ft_printf("*(argv + (pipex->argc - 1): %s\n", *(argv + (pipex->argc - 1)));
 	ret += parse_third_part(*(argv + (pipex->argc - 1)), pipex);
 	return (ret > 3);
 }

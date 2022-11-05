@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:48:54 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 03:47:38 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/05 04:03:56 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int			parse_first_part(char *file, t_pipex *pipex);
 
 //	--------parse_second_part.c
 int			parse_second_part(t_pipex *pipex);
-t_cmds	*get_cmd(t_cmds *start, int i);
 
 //	--------parse_third_part.c
 int	parse_third_part(char *file, t_pipex *pipex);
