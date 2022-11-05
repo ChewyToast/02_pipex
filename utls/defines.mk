@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/04 18:10:30 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/05 01:10:58 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,11 @@ MKF =				Makefile
 FILE_PIPEX =		pipex.c
 
 FILES_PARSING =		parse_first_part.c	\
+					parse_second_part.c	\
+					parse_third_part.c	\
 					parse_input.c		\
-					parse_utils.c
+					parse_utils.c		\
+					get_inputs.c
 
 MKF =				Makefile
 

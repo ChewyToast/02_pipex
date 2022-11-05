@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/04 19:47:36 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/05 01:21:51 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ fcleanall:
 re:
 				@$(MAKE) fclean
 				@$(MAKE) all
-
 
 $(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJ_PIPEX) $(OBJ_PARSING)
 				$(GCC) $(FLAGS) $(OBJ_PIPEX) $(OBJ_PARSING) $(LIB) -o $(NAME)

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/04 20:57:13 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/04 23:35:49 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	init_pipex(int argc, t_pipex *pipex)
 {
 	pipex->inpfd = 0;
 	pipex->outfd = 0;
-	pipex->error = 0;
+	pipex->util = 0;
 	pipex->argc = argc;
 	pipex->path = NULL;
 	pipex->cmds = NULL;

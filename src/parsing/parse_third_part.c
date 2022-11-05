@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_first_part.c                                 :+:      :+:    :+:   */
+/*   parse_third_part.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 16:19:02 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 01:05:19 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/05 00:25:18 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/05 01:13:24 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_utils.h"
 #include "bmlib.h"
 
-int	parse_first_part(char *file, t_pipex *pipex)
+int	parse_third_part(char *file, t_pipex *pipex)
 {
 	pid_t	pid;
 	int		status;
@@ -24,7 +24,7 @@ int	parse_first_part(char *file, t_pipex *pipex)
 				" error creating first fork()", 0));
 	if (!pid)
 	{
-		if (!ft_check_file(file, R_OK))
+		if (!ft_check_file(file, W_OK))
 			exit (0);
 		if (!ft_check_cmd(pipex->cmds, pipex->path))
 			exit (0);
@@ -33,7 +33,7 @@ int	parse_first_part(char *file, t_pipex *pipex)
 	else
 	{
 		waitpid(pid, &status, 0);
-		return (WEXITSTATUS(status));
+		pipex->util += WEXITSTATUS(status);
 	}
 	return (1);
 }
