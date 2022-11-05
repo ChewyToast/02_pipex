@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:48:54 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 04:03:56 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/05 04:54:21 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			parse_first_part(char *file, t_pipex *pipex);
 int			parse_second_part(t_pipex *pipex);
 
 //	--------parse_third_part.c
-int	parse_third_part(char *file, t_pipex *pipex);
+int			parse_third_part(char *file, t_pipex *pipex);
 
 # define MKO "error trying to allocate memory"
 
