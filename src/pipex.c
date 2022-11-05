@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/04 23:35:49 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/05 03:01:28 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	if (!parse_input(argv, env, &pipex))
 		return (0);
-	show_input(&pipex);
+	else
+		show_input(&pipex);
 	return (1);
 }
 

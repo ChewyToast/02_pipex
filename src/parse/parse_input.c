@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:13:25 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 01:51:46 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/05 03:50:15 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,23 @@ int	parse_input(char **argv, char **env, t_pipex *pipex)
 		return (0);
 	if (!get_path(pipex, env, "PATH="))
 		return (0);
+	ft_printf("*(argv + 1: %s\n", *(argv + 1));
 	ret += parse_first_part(*(argv + 1), pipex);
 	ret += parse_second_part(pipex);
+	ft_printf("*(argv + (pipex->argc - 1): %s\n", *(argv + (pipex->argc - 1)));
 	ret += parse_third_part(*(argv + (pipex->argc - 1)), pipex);
 	return (ret > 3);
 }
 
 int	ft_pipex_error(char *first, char *second, char *thrd, int ret)
 {
-	write(2, first, ft_strlen(first));
+	size_t	len;
+
+	if (!first)
+		len = 0;
+	else
+		len = ft_strlen(first);
+	write(2, first, len);
 	write(2, second, ft_strlen(second));
 	write(2, thrd, ft_strlen(thrd));
 	write(2, "\n", 1);

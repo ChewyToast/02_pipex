@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_second_part.c                                :+:      :+:    :+:   */
+/*   second_part.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 23:12:24 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 01:03:27 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/05 03:52:01 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_utils.h"
 #include "bmlib.h"
-
-static t_cmds	*get_cmd(t_cmds *start, int i);
 
 int	parse_second_part(t_pipex *pipex)
 {
@@ -30,6 +28,7 @@ int	parse_second_part(t_pipex *pipex)
 					" error creating first fork()", 0));
 		if (!pid)
 		{
+			ft_printf("pipex->cmds->next, pipex->argc - 3: %s\n", (get_cmd(pipex->cmds->next, pipex->argc - 3))->cmd);
 			if (!ft_check_cmd(get_cmd(pipex->cmds->next, i), pipex->path))
 				exit (0);
 			exit (1);
@@ -44,7 +43,7 @@ int	parse_second_part(t_pipex *pipex)
 	return (pipex->util == i);
 }
 
-static t_cmds	*get_cmd(t_cmds *start, int i)
+t_cmds	*get_cmd(t_cmds *start, int i)
 {
 	while (i && start)
 	{

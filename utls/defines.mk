@@ -6,55 +6,58 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/05 01:10:58 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/05 03:34:01 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =				pipex
+NAME		=		pipex
 
-MKF =				Makefile
+MKF			=		Makefile
 
-FILE_PIPEX =		pipex.c
+FILE_PIPEX		=	pipex.c
 
-FILES_PARSING =		parse_first_part.c	\
-					parse_second_part.c	\
-					parse_third_part.c	\
-					parse_input.c		\
-					parse_utils.c		\
+FILES_PARSE	=		parse_input.c	\
+					parse_utils.c	\
 					get_inputs.c
 
-MKF =				Makefile
+FILES_PARTS	=		first_part.c	\
+					second_part.c	\
+					third_part.c	\
 
-SRC_PIPEX =			$(addprefix $(SRC_DIR)/, $(FILE_PIPEX))
+SRC_PIPEX	=		$(addprefix $(SRC_DIR)/, $(FILE_PIPEX))
 
-SRC_PARSING =		$(addprefix $(SRC_DIR_PARSE)/, $(FILES_PARSING))
+SRC_PARSE	=		$(addprefix $(SRC_DIR)/$(SRC_PARSE)/, $(FILES_PARSE))
 
-OBJ_PIPEX =			$(addprefix $(OBJ_DIR)/, $(FILE_PIPEX:.c=.o))
+SRC_PARTS	=		$(addprefix $(SRC_DIR)/$(SRC_PARTS)/, $(FILES_PARTS))
 
-OBJ_PARSING =		$(addprefix $(OBJ_DIR)/, $(FILES_PARSING:.c=.o))
+OBJS		=		$(addprefix $(OBJ_DIR)/, $(FILE_PIPEX:.c=.o))
 
-DEPS_PIPEX =		$(addprefix $(DEPS_DIR)/, $(FILES:.o=.d))
+OBJS		+=		$(addprefix $(OBJ_DIR)/, $(FILES_PARSE:.c=.o))
 
-DEPS_PARSING =		$(addprefix $(DEPS_DIR)/, $(FILES_PARSING:.o=.d))
+OBJS		+=		$(addprefix $(OBJ_DIR)/, $(FILES_PARTS:.c=.o))
 
-SRC_DIR =			src
+DEPS_PIPEX	=		$(addprefix $(DEPS_DIR)/, $(OBJS:.o=.d))
 
-SRC_DIR_PARSE =		src/parsing
+SRC_DIR		=		src
 
-OBJ_DIR =			.obj
+PARSE_DIR	=		parse
 
-DEPS_DIR =			.deps
+PARTS_DIR	=		parts
 
-MAKE_LIB =			inc/bmlib/
+OBJ_DIR		=		.obj
 
-LIB =				inc/bmlib/bmlib.a
+DEPS_DIR	=		.deps
 
-INCLUDE =			-I inc/headers
+MAKE_LIB	=		inc/bmlib/
 
-INCLUDE +=			-I inc/bmlib
+LIB			=		inc/bmlib/bmlib.a
 
-GCC =				gcc
+INCLUDE		=		-I inc/headers
 
-FLAGS =				-Wall -Werror -Wextra
+INCLUDE		+=		-I inc/bmlib
 
-FLAGS_MMD =			-Wall -Werror -Wextra -MMD -MP
+GCC			=		gcc
+
+FLAGS		=		-Wall -Werror -Wextra
+
+FLAGS_MMD	=		-Wall -Werror -Wextra -MMD -MP
