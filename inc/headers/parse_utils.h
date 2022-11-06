@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:48:54 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 04:57:21 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/06 14:18:09 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 
 # include <fcntl.h>
+
+# include <sys/wait.h>
 
 # include "pipex_struct.h"
 

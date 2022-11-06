@@ -61,3 +61,13 @@ GCC			=		gcc
 FLAGS		=		-Wall -Werror -Wextra
 
 FLAGS_MMD	=		-Wall -Werror -Wextra -MMD -MP
+
+DEL_LINE =		\033[2K
+
+DEF_COLOR =		\033[0;39m
+
+BROWN =			\033[38;2;184;143;29m
+
+DARK_GRAY =		\033[38;5;234m
+
+DARK_GREEN =	\033[1m\033[38;2;75;179;82m
