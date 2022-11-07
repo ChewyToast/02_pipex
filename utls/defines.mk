@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/05 04:59:04 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/07 16:04:22 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,12 +62,12 @@ FLAGS		=		-Wall -Werror -Wextra
 
 FLAGS_MMD	=		-Wall -Werror -Wextra -MMD -MP
 
-DEL_LINE =		\033[2K
+DEL_LINE =			\033[2K
 
-DEF_COLOR =		\033[0;39m
+DEF_COLOR =			\033[0;39m
 
-BROWN =			\033[38;2;184;143;29m
+BROWN =				\033[38;2;184;143;29m
 
-DARK_GRAY =		\033[38;5;234m
+DARK_GRAY =			\033[38;5;234m
 
-DARK_GREEN =	\033[1m\033[38;2;75;179;82m
+DARK_GREEN =		\033[1m\033[38;2;75;179;82m

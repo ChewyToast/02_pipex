@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:48:54 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/06 14:18:09 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:42:26 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/wait.h>
 
 # include "pipex_struct.h"
+
+void	show_input(t_pipex *pipex);
 
 //	--------parse_input.c
 int			ft_pipex_error(char *first, char *second, char *thrd, int ret);

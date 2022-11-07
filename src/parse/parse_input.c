@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:13:25 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 04:57:21 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:08:17 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parse_input(char **argv, char **env, t_pipex *pipex)
 	int	ret;
 
 	ret = 1;
-	if (pipex->argc < 4)
+	if (pipex->argc < 5)
 		return (ft_pipex_error(NULL, "bash:",
 				" Invalid number of arguments", 0));
 	if (!get_argv(argv + 2, pipex, pipex->cmds))

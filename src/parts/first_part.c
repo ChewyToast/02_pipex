@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 04:58:17 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 04:58:23 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:49:17 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	parse_first_part(char *file, t_pipex *pipex)
 			exit (0);
 		if (!ft_check_cmd(pipex->cmds, pipex->path))
 			exit (0);
+		exit (1);
 	}
 	else
 	{
