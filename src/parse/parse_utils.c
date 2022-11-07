@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:43:00 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/05 01:52:25 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:04:44 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	ft_check_file(char *file, int mode)
 			return (ft_pipex_error("bash: ", file,
 					": No such file or directory", 0));
 		else if (access(file, mode))
-			return (ft_pipex_error("bash: ", file,
-					": Permission denied", 0));
+			exit (ft_pipex_error("bash: ", file,
+					": Permission denied", 1));
 	}
 	else
 	{
 		if (!access(file, F_OK))
 		{
 			if (access(file, mode))
-				return (ft_pipex_error("bash: ", file,
-						": Permission denied", 0));
+				exit (ft_pipex_error("bash: ", file,
+						": Permission denied", 1));
 		}
 	}
 	return (1);
@@ -50,8 +50,8 @@ int	ft_check_cmd(t_cmds *cmd, char **path)
 	{
 		comnd = ft_strjoin("/\0", cmd->cmd);
 		if (!comnd)
-			return (ft_pipex_error(NULL, "bash:",
-					" error allocating memory", 0));
+			exit (ft_pipex_error(NULL, "bash:",
+					" error allocating memory", 1));
 		if (!second_check_cmd_util(cmd, path, comnd))
 			return (0);
 	}
@@ -63,7 +63,7 @@ static int	first_check_cmd_util(t_cmds *cmd)
 	if (!access(cmd->cmd, X_OK))
 		return (1);
 	ft_pipex_error("bash: ", cmd->cmd, ": Permission denied", 0);
-	return (0);
+	exit (1);
 }
 
 static int	second_check_cmd_util(t_cmds *cmd, char **path, char *comnd)
@@ -84,15 +84,15 @@ static int	second_check_cmd_util(t_cmds *cmd, char **path, char *comnd)
 				return (end_check_cmd(NULL, comnd, 1));
 			}
 			else
-				return (end_check_cmd(comnd, tmp,
+				exit (end_check_cmd(comnd, tmp,
 						ft_pipex_error("bash: ", tmp,
-							": Permission denied", 0)));
+							": Permission denied", 1)));
 		}
 		free(tmp);
 		path++;
 	}
-	return (end_check_cmd(comnd, NULL,
-			ft_pipex_error("bash: ", comnd + 1, ": command not found", 0)));
+	exit (end_check_cmd(comnd, NULL,
+			ft_pipex_error("bash: ", comnd + 1, ": command not found", 127)));
 }
 
 static int	end_check_cmd(char *str2, char *str3, int ret)

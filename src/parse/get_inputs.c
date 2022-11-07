@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 23:02:59 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/07 16:24:46 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:00:10 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	get_path(t_pipex *pipex, char **env, char *path_compare)
 				": No such file or directory", 0);
 			tmp = tmp->next;
 		}
-		return (0);
+		exit (1);
 	}
 	pipex->path = ft_split(*env + 5, ':' );
 	if (!pipex->path)
