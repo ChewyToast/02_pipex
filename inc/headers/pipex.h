@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:55:30 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/07 16:42:25 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:29:36 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 void	show_input(t_pipex *pipex);
 
 //	--------pipex.c
-static int	init_pipex(int argc, t_pipex *pipex);
+static int	init_pipex(int argc, t_pipex *pipex, char **env);
 int			ft_pipex_error(char *first, char *second, char *thrd, int ret);
 
 //	--------parse_input.c

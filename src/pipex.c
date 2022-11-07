@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/07 21:05:22 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:33:34 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_pipex	pipex;
 
-	if (!init_pipex(argc, &pipex))
+	if (!init_pipex(argc, &pipex, env))
 		return (end_pipex(&pipex));
 	if (!parse_input(argv, env, &pipex))
 		return (end_pipex(&pipex));
@@ -27,14 +27,16 @@ int	main(int argc, char **argv, char **env)
 	return (1);
 }
 
-static int	init_pipex(int argc, t_pipex *pipex)
+static int	init_pipex(int argc, t_pipex *pipex, char **env)
 {
 	pipex->inpfd = 0;
 	pipex->outfd = 0;
 	pipex->util = 0;
 	pipex->argc = argc;
+	pipex->pipes = NULL;
 	pipex->path = NULL;
 	pipex->cmds = NULL;
+	pipex->env = env;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:49:40 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/04 23:35:41 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:29:01 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ struct s_pipex
 	int		outfd;
 	int		argc;
 	int		util;
+	int		*pipes;
 	char	**path;
+	char	**env;
 	t_cmds	*cmds;
 };
 
