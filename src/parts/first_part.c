@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:02:10 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/09 22:38:17 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/09 22:40:20 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	first_part(t_pipex *pip)
 	if (pid < 0)
 	{
 		pip->utils->exit_status = 1;
-			exit (error_msg(NULL, "bash", ECF, 1));
+		exit (error_msg(NULL, "bash", ECF, 1));
 	}
 	else if (!pid)
 	{

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/09 22:26:47 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/09 22:45:03 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	main(int argc, char **argv, char **env)
 		exit(error_msg(NULL, "bash", MKO, 1));
 	first_part(&pip);
 	// second_part(&pip);
-	// third_part(&pip);
-	exit (pip.utils->exit_status);
+	third_part(&pip);
+	exit (clean_exit(&pip, pip.utils->exit_status));
 }
