@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 22:36:47 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/09 22:44:45 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/09 23:03:29 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	third_part(t_pipex *pip)
 		pip->inputs->argv += pip->inputs->argc - 4;
 		check_cmd(pip, pip->cmds);
 		// execv_cmd(pip);
-		exit (0);
+		exit (clean_exit(pip, 0));
 	}
 	waitpid(pid, &status, 0);
 	pip->utils->exit_status = WEXITSTATUS(status);

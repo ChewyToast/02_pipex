@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/09 22:45:42 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/09 22:58:35 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ FILES_UTILS	=		utils1.c	\
 					utils2.c
 
 FILES_PARTS	=		first_part.c	\
+					second_part.c	\
 					third_part.c
 
 SRC_PIPEX	=		$(addprefix $(SRC_DIR)/, $(FILE_PIPEX))
