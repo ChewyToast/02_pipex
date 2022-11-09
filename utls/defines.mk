@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/07 16:04:22 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/09 22:38:24 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,23 +16,22 @@ MKF			=		Makefile
 
 FILE_PIPEX		=	pipex.c
 
-FILES_PARSE	=		parse_input.c	\
-					parse_utils.c	\
-					get_inputs.c
+FILES_UTILS	=		utils1.c	\
+					utils2.c
 
-FILES_PARTS	=		first_part.c	\
-					second_part.c	\
-					third_part.c	\
+FILES_PARTS	=		first_part.c
+#					second_part.c
+#					third_part.c
 
 SRC_PIPEX	=		$(addprefix $(SRC_DIR)/, $(FILE_PIPEX))
 
-SRC_PARSE	=		$(addprefix $(SRC_DIR)/$(SRC_PARSE)/, $(FILES_PARSE))
+SRC_UTILS	=		$(addprefix $(SRC_DIR)/$(SRC_UTILS)/, $(FILES_UTILS))
 
 SRC_PARTS	=		$(addprefix $(SRC_DIR)/$(SRC_PARTS)/, $(FILES_PARTS))
 
 OBJS		=		$(addprefix $(OBJ_DIR)/, $(FILE_PIPEX:.c=.o))
 
-OBJS		+=		$(addprefix $(OBJ_DIR)/, $(FILES_PARSE:.c=.o))
+OBJS		+=		$(addprefix $(OBJ_DIR)/, $(FILES_UTILS:.c=.o))
 
 OBJS		+=		$(addprefix $(OBJ_DIR)/, $(FILES_PARTS:.c=.o))
 
@@ -40,7 +39,7 @@ DEPS_PIPEX	=		$(addprefix $(DEPS_DIR)/, $(OBJS:.o=.d))
 
 SRC_DIR		=		src
 
-PARSE_DIR	=		parse
+UTILS_DIR	=		utils
 
 PARTS_DIR	=		parts
 

@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.h                                      :+:      :+:    :+:   */
+/*   second_part.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 15:35:46 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/09 22:18:21 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/09 22:28:32 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/09 22:36:34 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_UTILS_H
-# define PIPEX_UTILS_H
+#include "pipex_utils.h"
+#include <stdlib.h>
 
-#include "pipex_struct.h"
-
-// 	--------utils1.c
-int		clean_exit(t_pipex *pip, int ret);
-int		error_msg(char *first, char *second, char *thrd, int ret);
-void	get_path(t_pipex *pip, char *path_compare);
-void	check_file(char *file, int mode, t_pipex *pip);
-void	check_cmd(t_pipex *pip, t_cmds *cmd);
-
-#endif
+void	second_part(t_pipex *pip)
+{
+	while();
+}

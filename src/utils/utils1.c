@@ -3,62 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:13:20 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/08 15:49:11 by bruno            ###   ########.fr       */
+/*   Updated: 2022/11/09 22:25:36 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "bmlib.h"
 #include "pipex_struct.h"
 
-void	init_pipex(int argc, char **argv, char **env, t_pipex *pip)
+int	init_pipex(int argc, char **argv, char **env, t_pipex *pip)
 {
-	pip->input->inpfd = 0;
-	pip->input->outfd = 0;
-	pip->input->argc = argc;
-	pip->input->argv = argv;
-	pip->input->env = env;
 	pip->cmds = NULL;
-	pip->utils->util = 0;
-	pip->util->pipes = NULL;
-	pip->util->path = NULL;
-	pip->util->exit_status = 0;
-}
-
-void	clean_exit(t_pipex *pip)
-{
-	size_t	iter;
-
-	iter = 0;
-	if (pipex->inpfd)
-		close(pipex->inpfd);
-	if (pipex->outfd)
-		close(pipex->outfd);
-	if (pipex->utils->path)
+	pip->inputs = malloc(sizeof(t_input));
+	if (!pip->inputs)
+		return (0);
+	pip->utils = malloc(sizeof(t_utils));
+	if (!pip->utils)
 	{
-		while (pipex->utils->path[iter])
-			free(pipex->utils->path[iter++]);
-		free(pipex->utils->path);
+		free(pip->inputs);
+		return (0);
 	}
+	pip->inputs->inpfd = 0;
+	pip->inputs->outfd = 0;
+	pip->inputs->argc = argc;
+	pip->inputs->argv = argv;
+	pip->inputs->env = env;
+	pip->utils->util = 0;
+	pip->utils->pipes = NULL;
+	pip->utils->path = NULL;
+	pip->utils->exit_status = 0;
+	return (1);
 }
 
-void	clean_exit_util(t_pipex *pip)
+int	clean_exit(t_pipex *pip, int ret)
 {
 	size_t	iter;
-	t_cmds	*tmp;
 
-	while (pipex->cmds)
+	if (pip->inputs->inpfd)
+		close(pip->inputs->inpfd);
+	if (pip->inputs->outfd)
+		close(pip->inputs->outfd);
+	if (pip->utils->path)
 	{
 		iter = 0;
-		free(pipex->cmds->cmd);
-		while (pipex->cmds->flags[iter])
-			free(pipex->cmds->flags[iter++]);
-		free(--(pipex->cmds->flags));
-		tmp = pipex->cmds->next;
-		free(pipex->cmds);
-		pipex->cmds = tmp;
+		while (pip->utils->path[iter])
+			free(pip->utils->path[iter++]);
+		free(pip->utils->path);
 	}
+	if (pip->cmds)
+	{
+		iter = 0;
+		while (pip->cmds->cmd[iter])
+			free(pip->cmds->cmd[iter++]);
+		free(pip->cmds);
+	}
+	free(pip->inputs);
+	free(pip->utils);
+	return (ret);
 }
 
 int	error_msg(char *first, char *second, char *thrd, int ret)

@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/05 03:33:57 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/09 21:59:01 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ re:
 
 $(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJS)
 				@$(GCC) $(FLAGS) $(OBJS) $(LIB) -o $(NAME)
+				@echo "pipex compiled 🎋"
 
 $(OBJ_DIR):
 				@mkdir -p -m700 $(OBJ_DIR)
@@ -50,7 +51,7 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(LIB) $(MKF)
 				@echo "compilin pipex file: <$(notdir $<)>"
 				@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
 
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/$(PARSE_DIR)/%.c $(LIB) $(MKF)
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/$(UTILS_DIR)/%.c $(LIB) $(MKF)
 				@$(GCC) $(FLAGS_MMD) $(INCLUDE) -c $< -o $@
 				@echo "compilin pipex file: <$(notdir $<)>"
 				@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/

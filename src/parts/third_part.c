@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   third_part.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/09 22:26:47 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/09 22:36:47 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/09 22:37:20 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "pipex.h"
 #include "pipex_utils.h"
+#include <stdlib.h>
 
-int	main(int argc, char **argv, char **env)
+void	third_part(t_pipex *pip)
 {
-	t_pipex	pip;
+	pid_t	pid;
+	int		status;
 
-	if (argc < 5)
-		exit (error_msg(NULL, "bash", INA, 1));
-	if (!init_pipex(argc, argv, env, &pip))
-		exit(error_msg(NULL, "bash", MKO, 1));
-	first_part(&pip);
-	// second_part(&pip);
-	// third_part(&pip);
-	exit (pip.utils->exit_status);
+	pid = fork();
+	if (pid < 0)
+	{
+		pip->utils->exit_status = 1;
+			exit (error_msg(NULL, "bash", ECF, 1));
+	}
+	else if (!pid)
+	{
+		get_path(pip, "PATH=");
+		check_file(*(pip->inputs->argv + 1), R_OK, pip);
+		check_cmd(pip, pip->cmds);
+		// execv_cmd(pip);
+		exit (0);
+	}
+	waitpid(pid, &status, 0);
+	pip->utils->exit_status = WEXITSTATUS(status);
 }

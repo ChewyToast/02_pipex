@@ -3,36 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   first_part.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:02:10 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/08 17:48:05 by bruno            ###   ########.fr       */
+/*   Updated: 2022/11/09 22:38:17 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_utils.h"
+#include <stdlib.h>
 
 void	first_part(t_pipex *pip)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid < 0)
 	{
 		pip->utils->exit_status = 1;
-		return ;//	------- ERROR EXIT
+			exit (error_msg(NULL, "bash", ECF, 1));
 	}
 	else if (!pid)
 	{
-		if (get_path())
-			exit ()//	------- ERROR EXIT
-		if (check_file())
-			exit ()//	------- ERROR EXIT
-		if (check_cmd())
-			exit ()//	------- ERROR EXIT
-		if (execv_cmd())
-			exit ()//	------- ERROR EXIT
-		exit (0);
+		get_path(pip, "PATH=");
+		check_file(*(pip->inputs->argv + 1), R_OK, pip);
+		check_cmd(pip, pip->cmds);
+		// execv_cmd(pip);
+		exit (clean_exit(pip, 0));
 	}
 	waitpid(pid, &status, 0);
 	pip->utils->exit_status = WEXITSTATUS(status);

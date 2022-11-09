@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:49:40 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/08 17:51:14 by bruno            ###   ########.fr       */
+/*   Updated: 2022/11/09 21:36:05 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ struct s_utils
 	int		exit_status;
 };
 
+# define BSH "bash: "
 # define CNF ": command not found"
 # define PMD ": Permission denied"
 # define BFD ": Bad file descriptor"
