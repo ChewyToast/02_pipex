@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:13:20 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/10 14:51:07 by bruno            ###   ########.fr       */
+/*   Updated: 2022/11/10 21:15:59 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	init_pipex(int argc, char **argv, char **env, t_pipex *pip)
 	pip->inputs->argc = argc;
 	pip->inputs->argv = argv;
 	pip->inputs->env = env;
-	pip->utils->util = 0;
+	pip->utils->error = 0;
 	pip->utils->pipes = NULL;
 	pip->utils->path = NULL;
 	pip->utils->exit_status = 0;
