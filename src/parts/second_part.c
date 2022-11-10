@@ -6,12 +6,13 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 22:28:32 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/09 23:03:25 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/10 02:18:43 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_utils.h"
 #include <stdlib.h>
+#include <sys/wait.h>
 
 void	second_part(t_pipex *pip)
 {

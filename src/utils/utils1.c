@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:13:20 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/09 23:40:35 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/10 14:51:07 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,14 @@ int	clean_exit(t_pipex *pip, int ret)
 			free(pip->cmds->cmd[iter++]);
 		free(pip->cmds);
 	}
-	free(pip->inputs);
-	free(pip->utils);
+	if (pip->inputs)
+		free(pip->inputs);
+	if (pip->utils)
+	{
+		if (pip->utils->pipes)
+			free(pip->utils->pipes);
+		free(pip->utils);
+	}
 	return (ret);
 }
 

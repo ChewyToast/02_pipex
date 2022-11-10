@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:49:40 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/09 23:37:45 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/10 14:26:55 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ struct s_input
 struct s_cmds
 {
 	char	**cmd;
-	t_cmds	*next;
 };
 
 struct s_utils
@@ -57,6 +56,7 @@ struct s_utils
 };
 
 # define BSH "bash: "
+# define CNO ": Cannot open"
 # define CNF ": command not found"
 # define PMD ": Permission denied"
 # define BFD ": Bad file descriptor"

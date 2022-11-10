@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/09 22:27:36 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/10 14:52:28 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {
 	char	*tmp;
 
-	cmd = malloc(sizeof(t_cmds));
-	if (!cmd)
-		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	cmd->cmd = ft_split(*(pip->inputs->argv + 2), 32);
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
@@ -97,5 +94,4 @@ static void	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 			exit (error_msg(BSH, *(cmd->cmd) + 1, CNF, clean_exit(pip, 127)));
 	free(*(cmd->cmd));
 	*(cmd->cmd) = tmp;
-	free(tmp);
 }

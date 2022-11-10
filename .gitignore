@@ -1,0 +1,6 @@
+*tester*
+*vs*
+*.out
+*.o
+*.d
+*.a
