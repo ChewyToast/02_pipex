@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.h                                      :+:      :+:    :+:   */
+/*   pipex_utils_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:35:46 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/09 22:18:21 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:05:53 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_UTILS_H
-# define PIPEX_UTILS_H
+#ifndef PIPEX_UTILS_BONUS_H
+# define PIPEX_UTILS_BONUS_H
 
-#include "pipex_struct.h"
+# include "pipex_struct.h"
 
 // 	--------utils1.c
 int		clean_exit(t_pipex *pip, int ret);

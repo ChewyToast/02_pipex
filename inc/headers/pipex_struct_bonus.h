@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_struct.h                                     :+:      :+:    :+:   */
+/*   pipex_struct_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 19:56:41 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/11 20:05:07 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/04 17:49:40 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/11 20:05:19 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_STRUCT_H
-# define PIPEX_STRUCT_H
+#ifndef PIPEX_STRUCT_BONUS_H
+# define PIPEX_STRUCT_BONUS_H
 
 # include <stdio.h>
 
