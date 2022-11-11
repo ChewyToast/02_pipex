@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:02:10 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/10 21:51:30 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:40:43 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ void	first_part(t_pipex *pip)
 	pid_t	pid;
 	int		status;
 
-	pip->utils->pipes = malloc(sizeof(int) * 2);
-	if (!pip->utils->pipes)
-		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	if (pipe(pip->utils->pipes) < 0)
 		exit (error_msg(NULL, "bash", ECP, clean_exit(pip, 1)));
 	pid = fork();
@@ -50,9 +47,6 @@ void	first_part(t_pipex *pip)
 
 static void	prepare_fd(t_pipex *pip)
 {
-	ft_printf("\nIn child the pipes[0] = %d, and the pipes[1] = %d\n", pip->utils->pipes[0], pip->utils->pipes[1]);
-	ft_printf("\n1 - Closing pipes[0]: %d\n2 - Dup2(inpfd (%d), 0)\n3 - Dup2(pipes[1] (%d), 1)", pip->utils->pipes[0], pip->inputs->inpfd, pip->utils->pipes[1]);
-	close(pip->utils->pipes[0]);
 	pip->inputs->inpfd = open(*(pip->inputs->argv + 1), O_RDONLY);
 	if (pip->inputs->inpfd < 0)
 		exit (error_msg(BSH, *(pip->inputs->argv + 1), CNO, clean_exit(pip, 1)));
@@ -60,4 +54,5 @@ static void	prepare_fd(t_pipex *pip)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	if (dup2(pip->utils->pipes[1], 1) < 0)
 	 	exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
+	close(pip->utils->pipes[0]);
 }

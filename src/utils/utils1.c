@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:13:20 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/10 21:15:59 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:19:00 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	init_pipex(int argc, char **argv, char **env, t_pipex *pip)
 	pip->inputs->argv = argv;
 	pip->inputs->env = env;
 	pip->utils->error = 0;
-	pip->utils->pipes = NULL;
+	// pip->utils->pipes = NULL;
 	pip->utils->path = NULL;
 	pip->utils->exit_status = 0;
 	return (1);
@@ -63,8 +63,8 @@ int	clean_exit(t_pipex *pip, int ret)
 		free(pip->inputs);
 	if (pip->utils)
 	{
-		if (pip->utils->pipes)
-			free(pip->utils->pipes);
+		// if (pip->utils->pipes)
+		// 	free(pip->utils->pipes);
 		free(pip->utils);
 	}
 	return (ret);

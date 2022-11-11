@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:49:40 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/10 21:15:39 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:18:27 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct s_cmds
 struct s_utils
 {
 	int		error;
-	int		*pipes;
+	int		pipes[2];
 	char	**path;
 	int		exit_status;
 };

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 22:36:47 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/10 22:01:52 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:02:03 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	third_part(t_pipex *pip)
 	pid_t	pid;
 	int		status;
 
+	close(pip->utils->pipes[1]);
+	if (dup2(pip->utils->pipes[0], 0) < 0)
+		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	pid = fork();
 	if (pid < 0)
 	{
@@ -49,14 +52,10 @@ void	third_part(t_pipex *pip)
 
 static void	prepare_fd(t_pipex *pip)
 {
-	ft_printf("\nIn child the pipes[0] = %d, and the pipes[1] = %d\n", pip->utils->pipes[0], pip->utils->pipes[1]);
-	ft_printf("\n1 - Closing pipes[1]: %d\n2 - Dup2(pipes[0] (%d), 0)\n3 - Dup2(outfd (%d), 1)\n\n", pip->utils->pipes[1], pip->utils->pipes[0], pip->inputs->outfd);
-	close(pip->utils->pipes[1]);
-	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT, 0644);
+	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT | O_RDWR, 0644);
 	if (pip->inputs->inpfd < 0)
 		exit (error_msg(BSH, *(pip->inputs->argv + 3), CNO, clean_exit(pip, 1)));
-	if (dup2(pip->utils->pipes[0], 0) < 0)
-		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
+
 	if (dup2(pip->inputs->outfd, 1) < 0)
 	 	exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 }
