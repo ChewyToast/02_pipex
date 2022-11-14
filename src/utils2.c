@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/11 20:00:34 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/14 02:20:19 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ static void	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 		iter++;
 	}
 	if (!pip->utils->path[iter])
-		exit (error_msg(BSH, *(cmd->cmd) + 1, CNF, clean_exit(pip, 127)));
+	{
+		error_msg(BSH, *(cmd->cmd) + 1, CNF, 1);
+		exit (clean_exit(pip, 127));
+	}
 	free(*(cmd->cmd));
 	*(cmd->cmd) = tmp;
 }

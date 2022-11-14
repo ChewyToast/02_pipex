@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/11 21:09:02 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/14 02:25:43 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "bmlib.h"
 
 int	main(int argc, char **argv, char **env)
 {
@@ -30,11 +31,12 @@ int	main(int argc, char **argv, char **env)
 	else if (!pid)
 		first_part(&pip);
 	waitpid(pid, &status, 0);
+	pip.utils->error = WEXITSTATUS(status);
 	close(pip.utils->pipes[1]);
 	if (dup2(pip.utils->pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
 	second_part(&pip);
-	exit (clean_exit(&pip, pip.utils->exit_status));
+	exit (clean_exit(&pip, WEXITSTATUS(status)));
 	return (0);
 }
 
@@ -48,8 +50,10 @@ void	first_part(t_pipex *pip)
 	check_cmd(pip, pip->cmds);
 	pip->inputs->inpfd = open(*(pip->inputs->argv + 1), O_RDONLY);
 	if (pip->inputs->inpfd < 0)
-		exit (error_msg(BSH, *(pip->inputs->argv + 1),
-				CNO, clean_exit(pip, 1)));
+	{
+		error_msg(BSH, *(pip->inputs->argv + 1), CNO, 1);
+		exit (clean_exit(pip, 1));
+	}
 	if (dup2(pip->inputs->inpfd, 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	if (dup2(pip->utils->pipes[1], 1) < 0)
@@ -70,12 +74,13 @@ void	second_part(t_pipex *pip)
 	check_cmd(pip, pip->cmds);
 	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT | O_RDWR, 0644);
 	if (pip->inputs->inpfd < 0)
-		exit (error_msg(BSH, *(pip->inputs->argv + 3),
-				CNO, clean_exit(pip, 1)));
+	{
+		error_msg(BSH, *(pip->inputs->argv + 3), CNO, 1); 
+		exit (clean_exit(pip, 1));
+	}
 	if (dup2(pip->inputs->outfd, 1) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
-	// if (pip->utils->error)
-	// 	exit (clean_exit(pip, 0));
-	execve(*(pip->cmds->cmd), pip->cmds->cmd, pip->inputs->env);
+	if (!pip->utils->error)
+		execve(*(pip->cmds->cmd), pip->cmds->cmd, pip->inputs->env);
 	exit (clean_exit(pip, 1));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 19:32:12 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/11 20:02:03 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/14 00:40:26 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 
 # include <fcntl.h>
+
+#include <sys/wait.h>
 
 # include "pipex_struct.h"
 
