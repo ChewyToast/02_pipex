@@ -19,7 +19,7 @@
 
 # include <fcntl.h>
 
-#include <sys/wait.h>
+# include <sys/wait.h>
 
 # include "pipex_struct.h"
 

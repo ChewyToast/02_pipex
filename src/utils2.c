@@ -90,10 +90,7 @@ static void	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 		iter++;
 	}
 	if (!pip->utils->path[iter])
-	{
-		error_msg(BSH, *(cmd->cmd) + 1, CNF, 1);
-		exit (clean_exit(pip, 127));
-	}
+		exit (clean_exit(pip, error_msg("pipex: ", *(cmd->cmd) + 1, CNF, 127)));
 	free(*(cmd->cmd));
 	*(cmd->cmd) = tmp;
 }

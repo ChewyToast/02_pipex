@@ -31,12 +31,10 @@ int	main(int argc, char **argv, char **env)
 	else if (!pid)
 		first_part(&pip);
 	waitpid(pid, &status, 0);
-	pip.utils->error = WEXITSTATUS(status);
 	close(pip.utils->pipes[1]);
 	if (dup2(pip.utils->pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
 	second_part(&pip);
-	exit (clean_exit(&pip, WEXITSTATUS(status)));
 	return (0);
 }
 
@@ -60,7 +58,9 @@ void	first_part(t_pipex *pip)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	close(pip->utils->pipes[0]);
 	execve(*(pip->cmds->cmd), pip->cmds->cmd, pip->inputs->env);
-	exit (clean_exit(pip, 1));
+	clean_exit(pip, 1);
+	perror(NULL);
+	exit (1);
 }
 
 void	second_part(t_pipex *pip)
@@ -75,7 +75,7 @@ void	second_part(t_pipex *pip)
 	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT | O_RDWR, 0644);
 	if (pip->inputs->inpfd < 0)
 	{
-		error_msg(BSH, *(pip->inputs->argv + 3), CNO, 1); 
+		error_msg(BSH, *(pip->inputs->argv + 3), CNO, 1);
 		exit (clean_exit(pip, 1));
 	}
 	if (dup2(pip->inputs->outfd, 1) < 0)
