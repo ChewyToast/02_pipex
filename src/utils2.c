@@ -36,9 +36,9 @@ void	check_file(char *file, int mode, t_pipex *pip)
 	if (mode == R_OK)
 	{
 		if (access(file, F_OK))
-			exit (error_msg(BSH, file, NFD, clean_exit(pip, 1)));
+			exit (error_msg("pipex: ", file, NFD, clean_exit(pip, 1)));
 		else if (access(file, mode))
-			exit (error_msg(BSH, file, PMD, clean_exit(pip, 1)));
+			exit (error_msg("pipex: ", file, PMD, clean_exit(pip, 1)));
 	}
 	else
 	{
