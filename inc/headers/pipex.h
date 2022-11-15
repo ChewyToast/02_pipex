@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 19:32:12 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/14 00:40:26 by bruno            ###   ########.fr       */
+/*   Updated: 2022/11/15 20:50:17 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ int			error_msg(char *first, char *second, char *thrd, int ret);
 void		get_path(t_pipex *pip, char *path_compare);
 void		check_file(char *file, int mode, t_pipex *pip);
 void		check_cmd(t_pipex *pip, t_cmds *cmd);
+
+char	**ft_cmd_split(char *input);
 
 #endif

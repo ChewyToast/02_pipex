@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/11 19:55:06 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/15 20:48:43 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ NAME		=		pipex
 
 FILES		=		pipex.c	\
 					utils1.c\
-					utils2.c
+					utils2.c\
+					ft_cmd_split.c
 
 SRC			=		$(addprefix $(SRC_DIR)/, $(FILES))
 

@@ -1,0 +1,2 @@
+grep: (standard input): Bad file descriptor
+bash: dup2: Bad file descriptor

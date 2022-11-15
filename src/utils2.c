@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/14 02:20:19 by bruno            ###   ########.fr       */
+/*   Updated: 2022/11/15 21:56:22 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,13 @@ void	check_file(char *file, int mode, t_pipex *pip)
 
 void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {
+	// size_t	i = 0;
 	char	*tmp;
 
-	cmd->cmd = ft_split(*(pip->inputs->argv + 2), 32);
+	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
+	// ft_printf("\nEND SPLIT\n");
+	// while (cmd->cmd[i])
+	// 	printf("\t<%s>\n", cmd->cmd[i++]);
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	if (access(*(cmd->cmd), F_OK))

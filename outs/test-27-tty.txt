@@ -1,0 +1,2 @@
+cat: stdin: Bad file descriptor
+pipex: notexisting: command not found

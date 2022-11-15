@@ -1,0 +1,2 @@
+cat: stdin: Bad file descriptor
+bash: not-executable: Permission denied

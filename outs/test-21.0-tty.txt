@@ -1,0 +1,1 @@
+grep: (standard input): Bad file descriptor
