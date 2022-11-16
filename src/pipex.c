@@ -30,11 +30,11 @@ int	main(int argc, char **argv, char **env)
 		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
 	else if (!pid)
 		first_part(&pip);
+	close(0);
 	waitpid(pid, &status, 0);
-	close(pip.utils->pipes[1]);
 	if (dup2(pip.utils->pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
-	// close(0);
+	close(pip.utils->pipes[1]);
 	second_part(&pip);
 	return (0);
 }
@@ -58,7 +58,6 @@ void	first_part(t_pipex *pip)
 	if (dup2(pip->utils->pipes[1], 1) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	close(pip->utils->pipes[0]);
-	close(0);
 	execve(*(pip->cmds->cmd), pip->cmds->cmd, pip->inputs->env);
 	clean_exit(pip, 1);
 	perror(NULL);
@@ -70,7 +69,7 @@ void	second_part(t_pipex *pip)
 	get_path(pip, "PATH=");
 	check_file(*(pip->inputs->argv + (pip->inputs->argc - 1)), W_OK, pip);
 	pip->inputs->argv += pip->inputs->argc - 4;
-	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT | O_RDWR, 0644);
+	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT | O_RDWR, 0666);
 	if (pip->inputs->inpfd < 0)
 	{
 		error_msg(BSH, *(pip->inputs->argv + 3), CNO, 1);
@@ -81,7 +80,7 @@ void	second_part(t_pipex *pip)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	check_cmd(pip, pip->cmds);
 	if (dup2(pip->inputs->outfd, 1) < 0)
-		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
+		exit (error_msg(BSH, "2", BFD, clean_exit(pip, 1)));
 	if (!pip->utils->error)
 		execve(*(pip->cmds->cmd), pip->cmds->cmd, pip->inputs->env);
 	exit (clean_exit(pip, 1));

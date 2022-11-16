@@ -56,7 +56,7 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 	char	*tmp;
 
 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
-	// ft_printf("\nEND SPLIT\n");
+	// ft_printf("\n----------END SPLIT------------\n");
 	// while (cmd->cmd[i])
 	// 	printf("\t<%s>\n", cmd->cmd[i++]);
 	if (!cmd->cmd)

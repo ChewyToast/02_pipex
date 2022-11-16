@@ -1,2 +1,0 @@
-[0;39m[1m[38;2;75;179;82mBMLIB COMPILED ✅[0;39m
-make[1]: `pipex' is up to date.
