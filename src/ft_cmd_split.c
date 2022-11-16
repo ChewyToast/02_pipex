@@ -41,7 +41,7 @@ char	**ft_cmd_split(char *input)
 	counter = parts_count(input);
 	if (counter < 0)
 		return (NULL); // ------- FALTA ERROR POR WRONG INPUT
-	// input = clean_input(input);
+	input = clean_input(input);
 	if (!input)
 		return (NULL); // ------- FALTA ERROR
 	cmd = ft_calloc(sizeof(char *), counter + 2);
@@ -97,12 +97,12 @@ int	parts_fill(char **cmd, char *input)
 	init_sp(&sp);
 	while(input[sp.count])
 	{
-		while (input[sp.count] && (input[sp.count] == 32 || input[sp.count] == '\f'
-				|| input[sp.count] == '\n' || input[sp.count] == '\r'
-				|| input[sp.count] == '\t' || input[sp.count] == '\v'))
+		// ft_printf("\n~~ START char: <%c>\n", input[sp.count]);
+		while (input[sp.count] && input[sp.count] == 32)
 			sp.count++;
 		input += sp.count;
 		sp.count = 0;
+		// ft_printf("~~ IN char: <%c>\n", input[sp.count]);
 		if (input[sp.count] && input[sp.count] != 34 && input[sp.count] != 39)
 		{
 			while (input[sp.count] && (input[sp.count] != 32 && input[sp.count] != '\f'
@@ -122,9 +122,11 @@ int	parts_fill(char **cmd, char *input)
 			while (input[sp.count] && input[sp.count] != 39)
 				sp.count++;
 		}
+		// ft_printf("~~ OUT char: <%c>\n", input[sp.count]);
 		if (!sp.count)
 			break ;
 		*cmd = ft_substr(input, 0, sp.count);
+		sp.parts++;
 		cmd++;
 		input += sp.count;
 		sp.count = 0;

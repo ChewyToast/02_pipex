@@ -52,13 +52,13 @@ void	check_file(char *file, int mode, t_pipex *pip)
 
 void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {
-	size_t	i = 0;
+	// size_t	i = 0;
 	char	*tmp;
 
 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
-	ft_printf("\n----------END SPLIT------------\n");
-	while (cmd->cmd[i])
-		printf("\t<%s>\n", cmd->cmd[i++]);
+	// ft_printf("\n----------END SPLIT------------\n");
+	// while (cmd->cmd[i])
+	// 	printf("\t<%s>\n", cmd->cmd[i++]);
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	if (access(*(cmd->cmd), F_OK))

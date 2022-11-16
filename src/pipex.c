@@ -30,11 +30,11 @@ int	main(int argc, char **argv, char **env)
 		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
 	else if (!pid)
 		first_part(&pip);
+	close(0);
 	waitpid(pid, &status, 0);
-	close(pip.utils->pipes[1]);
 	if (dup2(pip.utils->pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
-	// close(0);
+	close(pip.utils->pipes[1]);
 	second_part(&pip);
 	return (0);
 }
@@ -58,7 +58,6 @@ void	first_part(t_pipex *pip)
 	if (dup2(pip->utils->pipes[1], 1) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	close(pip->utils->pipes[0]);
-	// close(0);
 	execve(*(pip->cmds->cmd), pip->cmds->cmd, pip->inputs->env);
 	clean_exit(pip, 1);
 	perror(NULL);
