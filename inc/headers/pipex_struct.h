@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 19:56:41 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/11 20:05:07 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:28:52 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ struct s_input
 
 struct s_cmds
 {
+	char	*path_comand;
 	char	**cmd;
 };
 

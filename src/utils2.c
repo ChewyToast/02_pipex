@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/15 21:56:22 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:08:50 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,36 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 	// size_t	i = 0;
 	char	*tmp;
 
+	// if (!ft_strncmp(*(pip->inputs->argv + 2), "awk", 4))
+	// 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
+	// else
+	// ft_printf("*(pip->inputs->argv + 2): <%s>\n", *(pip->inputs->argv + 2));
+	// ft_printf("el otro: <%s>\n", "awk \'\"\'\"\'{count++} END {print count}\'\"\'\"\'");
+	// if (!ft_strncmp(*(pip->inputs->argv + 2), "awk \'\"\'\"\'{count++} END {print count}\'\"\'\"\'", 42))
+	// 	ft_printf("\nsomos iguales\n");
+	// else
+	// 	ft_printf("\nsomos diferentes\n");
 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
+	// int i = 0;
+	// while(cmd->cmd[i])
+	// 	ft_printf("\nsplit:<%s>\n", cmd->cmd[i++]);
+	// ft_printf("\n-------------\n");
+	// cmd->cmd = ft_split(*(pip->inputs->argv + 2), 32);
 	// ft_printf("\n----------END SPLIT------------\n");
 	// while (cmd->cmd[i])
 	// 	printf("\t<%s>\n", cmd->cmd[i++]);
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
-	if (access(*(cmd->cmd), F_OK))
+	cmd->path_comand = ft_substr(*(cmd->cmd), 0, ft_strlen(*(cmd->cmd)));
+	if (!cmd->path_comand)
+		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
+	if (access(cmd->path_comand, F_OK))
 	{
-		tmp = ft_strjoin("/\0", *(cmd->cmd));
+		tmp = ft_strjoin("/\0", cmd->path_comand);
 		if (!tmp)
 			exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
-		free(*(cmd->cmd));
-		*(cmd->cmd) = tmp;
+		free(cmd->path_comand);
+		cmd->path_comand = tmp;
 		check_cmd_while(pip, cmd);
 	}
 }
@@ -78,23 +95,28 @@ static void	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 	char	*tmp;
 
 	iter = 0;
-	while (pip->utils->path[iter])
+	if (pip->utils->path)
 	{
-		tmp = ft_strjoin(pip->utils->path[iter], *(cmd->cmd));
-		if (!tmp)
-			exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
-		if (!access(tmp, F_OK))
+		while (pip->utils->path[iter])
 		{
-			if (!access(tmp, X_OK))
-				break ;
+			tmp = ft_strjoin(pip->utils->path[iter], cmd->path_comand);
+			if (!tmp)
+				exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
+			if (!access(tmp, F_OK))
+			{
+				if (!access(tmp, X_OK))
+					break ;
+				free(tmp);
+				exit (error_msg(BSH, cmd->path_comand, PMD, clean_exit(pip, 1)));
+			}
 			free(tmp);
-			exit (error_msg(BSH, *(cmd->cmd) + 1, PMD, clean_exit(pip, 1)));
+			iter++;
 		}
-		free(tmp);
-		iter++;
+		if (!pip->utils->path[iter])
+			exit (clean_exit(pip, error_msg("pipex: ", cmd->path_comand + 1, CNF, 127)));
 	}
-	if (!pip->utils->path[iter])
-		exit (clean_exit(pip, error_msg("pipex: ", *(cmd->cmd) + 1, CNF, 127)));
-	free(*(cmd->cmd));
-	*(cmd->cmd) = tmp;
+	else
+		exit (clean_exit(pip, error_msg("pipex: ", cmd->path_comand + 1, CNF, 127)));
+	free(cmd->path_comand);
+	cmd->path_comand = tmp;
 }

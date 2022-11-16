@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:13:20 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/15 21:23:32 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:35:43 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ int	clean_exit(t_pipex *pip, int ret)
 	if (pip->cmds)
 	{
 		iter = 0;
-		// while (pip->cmds->cmd[iter])
-		// 	free(pip->cmds->cmd[iter++]);
-		// if (pip->cmds->cmd)
-		// 	free(pip->cmds->cmd);
-		// if (pip->cmds)
-		// 	free(pip->cmds);
+		while (pip->cmds->cmd[iter])
+			free(pip->cmds->cmd[iter++]);
+		free(pip->cmds->path_comand);
+		free(pip->cmds->cmd);
+		free(pip->cmds);
 	}
 	free(pip->utils);
 	free(pip->inputs);
