@@ -12,6 +12,7 @@ int	main(int arc, char **argv)
 	char	**command_args;
 	int		i;
 
+
 	printf("\nTEST PARA EL SPLIT DE PIPEX\n\n");
 	printf("###########################################################");
 	printf("\nLa input es: %s\n", command);
