@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomoll <brunomoll@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/16 17:54:05 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:09:59 by brunomoll        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	main(int argc, char **argv, char **env)
 	if (pipe(pip.utils->pipes) < 0)
 		exit (error_msg(NULL, "bash", ECP, clean_exit(&pip, 1)));
 	pid = fork();
+	close(0);
 	if (pid < 0)
 		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
 	else if (!pid)
 		first_part(&pip);
-	close(0);
 	waitpid(pid, &status, 0);
 	if (dup2(pip.utils->pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
