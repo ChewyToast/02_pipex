@@ -6,7 +6,7 @@
 /*   By: brunomoll <brunomoll@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/17 11:26:50 by brunomoll        ###   ########.fr       */
+/*   Updated: 2022/11/20 02:01:01 by brunomoll        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,9 @@ void	check_file(char *file, int mode, t_pipex *pip)
 
 void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {
-	// size_t	i = 0;
 	char	*tmp;
 
-	// if (!ft_strncmp(*(pip->inputs->argv + 2), "awk", 4))
-	// 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
-	// else
-	// ft_printf("*(pip->inputs->argv + 2): <%s>\n", *(pip->inputs->argv + 2));
-	// ft_printf("el otro: <%s>\n", "awk \'\"\'\"\'{count++} END {print count}\'\"\'\"\'");
-	// if (!ft_strncmp(*(pip->inputs->argv + 2), "awk \'\"\'\"\'{count++} END {print count}\'\"\'\"\'", 42))
-	// 	ft_printf("\nsomos iguales\n");
-	// else
-	// 	ft_printf("\nsomos diferentes\n");
 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
-	// int i = 0;
-	// while(cmd->cmd[i])
-	// 	ft_printf("\nsplit:<%s>\n", cmd->cmd[i++]);
-	// ft_printf("\n-------------\n");
-	// cmd->cmd = ft_split(*(pip->inputs->argv + 2), 32);
-	// ft_printf("\n----------END SPLIT------------\n");
-	// while (cmd->cmd[i])
-	// 	printf("\t<%s>\n", cmd->cmd[i++]);
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	cmd->path_comand = ft_substr(*(cmd->cmd), 0, ft_strlen(*(cmd->cmd)));
@@ -107,16 +89,19 @@ static void	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 				if (!access(tmp, X_OK))
 					break ;
 				free(tmp);
-				exit (error_msg(BSH, cmd->path_comand, PMD, clean_exit(pip, 1)));
+				exit (clean_exit(pip, error_msg(BSH, cmd->path_comand,
+							PMD, 1)));
 			}
 			free(tmp);
 			iter++;
 		}
 		if (!pip->utils->path[iter])
-			exit (clean_exit(pip, error_msg("pipex: ", cmd->path_comand + 1, CNF, 127)));
+			exit (clean_exit(pip, error_msg("pipex: ",
+						cmd->path_comand + 1, CNF, 127)));
 	}
 	else
-		exit (clean_exit(pip, error_msg("pipex: ", cmd->path_comand + 1, CNF, 127)));
+		exit (clean_exit(pip, error_msg("pipex: ",
+					cmd->path_comand + 1, CNF, 127)));
 	free(cmd->path_comand);
 	cmd->path_comand = tmp;
 }

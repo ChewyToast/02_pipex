@@ -6,7 +6,7 @@
 /*   By: brunomoll <brunomoll@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/17 11:09:59 by brunomoll        ###   ########.fr       */
+/*   Updated: 2022/11/20 01:54:54 by brunomoll        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int argc, char **argv, char **env)
 	if (pipe(pip.utils->pipes) < 0)
 		exit (error_msg(NULL, "bash", ECP, clean_exit(&pip, 1)));
 	pid = fork();
-	close(0);
 	if (pid < 0)
 		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
 	else if (!pid)
@@ -35,6 +34,7 @@ int	main(int argc, char **argv, char **env)
 	if (dup2(pip.utils->pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
 	close(pip.utils->pipes[1]);
+	close(pip.utils->pipes[0]);
 	second_part(&pip);
 	return (0);
 }
@@ -58,8 +58,8 @@ void	first_part(t_pipex *pip)
 	if (dup2(pip->utils->pipes[1], 1) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	close(pip->utils->pipes[0]);
+	close(pip->utils->pipes[1]);
 	execve(pip->cmds->path_comand, pip->cmds->cmd, pip->inputs->env);
-	close(1);
 	clean_exit(pip, 1);
 	perror(NULL);
 	exit (1);
