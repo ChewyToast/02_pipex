@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brunomoll <brunomoll@student.42.fr>        +#+  +:+       +#+         #
+#    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/17 11:25:48 by brunomoll        ###   ########.fr        #
+#    Updated: 2022/11/21 22:46:17 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ NAME		=		pipex
 FILES		=		pipex.c	\
 					utils1.c\
 					utils2.c\
-					ft_cmd_split.c
+					ft_cmd_split.c\
+					main.c
 
 SRC			=		$(addprefix $(SRC_DIR)/, $(FILES))
 

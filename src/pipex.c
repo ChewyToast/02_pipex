@@ -3,41 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunomoll <brunomoll@student.42.fr>        +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/20 01:54:54 by brunomoll        ###   ########.fr       */
+/*   Updated: 2022/11/21 22:46:20 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "bmlib.h"
 
-int	main(int argc, char **argv, char **env)
-{
-	t_pipex	pip;
-	pid_t	pid;
-	int		status;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	t_pipex	pip;
+// 	pid_t	pid;
+// 	int		status;
 
-	if (argc != 5)
-		exit (error_msg(NULL, "bash", INA, 1));
-	if (!init_pipex(argc, argv, env, &pip))
-		exit(error_msg(NULL, "bash", MKO, 1));
-	if (pipe(pip.utils->pipes) < 0)
-		exit (error_msg(NULL, "bash", ECP, clean_exit(&pip, 1)));
-	pid = fork();
-	if (pid < 0)
-		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
-	else if (!pid)
-		first_part(&pip);
-	waitpid(pid, &status, 0);
-	if (dup2(pip.utils->pipes[0], 0) < 0)
-		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
-	close(pip.utils->pipes[1]);
-	close(pip.utils->pipes[0]);
-	second_part(&pip);
-	return (0);
-}
+// 	if (argc != 5)
+// 		exit (error_msg(NULL, "bash", INA, 1));
+// 	if (!init_pipex(argc, argv, env, &pip))
+// 		exit(error_msg(NULL, "bash", MKO, 1));
+// 	if (pipe(pip.utils->pipes) < 0)
+// 		exit (error_msg(NULL, "bash", ECP, clean_exit(&pip, 1)));
+// 	pid = fork();
+// 	if (pid < 0)
+// 		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
+// 	else if (!pid)
+// 		first_part(&pip);
+// 	waitpid(pid, &status, 0);
+// 	if (dup2(pip.utils->pipes[0], 0) < 0)
+// 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
+// 	close(pip.utils->pipes[1]);
+// 	close(pip.utils->pipes[0]);
+// 	second_part(&pip);
+// 	return (0);
+// }
 
 void	first_part(t_pipex *pip)
 {
