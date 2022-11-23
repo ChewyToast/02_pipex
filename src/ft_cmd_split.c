@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomoll <brunomoll@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 20:49:46 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/21 22:50:58 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/20 02:07:32 by brunomoll        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	*clean_input(char *input);
 
 struct s_sp
 {
-	ssize_t	dquot;
-	ssize_t	squot;
-	ssize_t	count;
-	ssize_t	parts;
+	size_t	dquot;
+	size_t	squot;
+	size_t	count;
+	size_t	parts;
 };
 
 /*
@@ -39,15 +39,13 @@ char	**ft_cmd_split(char *input)
 	char	**cmd;
 	ssize_t	counter;
 
-	ft_printf("\n----RECIVED INPUT: <%s>\n", input);
 	counter = parts_count(input);
-	ft_printf("counter: %d\n", counter);
 	if (counter < 0)
 		return (NULL);
-	// input = clean_input(input);
+	input = clean_input(input);
 	if (!input)
 		return (NULL);
-	cmd = ft_calloc(sizeof(char *), counter);
+	cmd = ft_calloc(sizeof(char *), counter + 2);
 	if (!cmd)
 		return (NULL);
 	if (!parts_fill(cmd, input))
@@ -101,45 +99,36 @@ int	parts_fill(char **cmd, char *input)
 	init_sp(&sp);
 	while (input[sp.count])
 	{
-		// ft_printf("START {input: <%c> sp.count: <%d>}\n", *input, sp.count);
 		while (input[sp.count] && input[sp.count] == 32)
 			sp.count++;
-		// ft_printf("count: %d ", sp.count);
 		input += sp.count;
 		sp.count = 0;
 		if (input[sp.count] && input[sp.count] != 34 && input[sp.count] != 39)
 		{
-			// ft_printf("<D space>, inpu:<%c>\n",*(input + sp.count));
 			while (input[sp.count] && (input[sp.count] != 32
 					&& input[sp.count] != '\f'
 					&& input[sp.count] != '\n' && input[sp.count] != '\r'
-					&& input[sp.count] != '\t' && input[sp.count] != '\v'
-					&& (input[sp.count] != 34 || (input[sp.count] == 34 && *(input - 1) == 92))))
+					&& input[sp.count] != '\t' && input[sp.count] != '\v'))
 				sp.count++;
 		}
-		else if (input[sp.count] && input[sp.count] == 34 && input[sp.count - 1] != 92)
+		else if (input[sp.count] && input[sp.count] == 34)
 		{
-			// ft_printf("<D double>, inpu:<%c>\n",*(input + sp.count));
 			input++;
-			while (input[sp.count] && (input[sp.count] != 34 || (input[sp.count] == 34 && input[sp.count - 1] == 92)))
+			while (input[sp.count] && input[sp.count] != 34)
 				sp.count++;
-			// ft_printf("END D double, inpu + 1:<%c>\n",*(input + sp.count + 1));
 		}
-		else if (input[sp.count] && input[sp.count] == 39 && input[sp.count - 1] != 92)
+		else if (input[sp.count] && input[sp.count] == 39)
 		{
-			// ft_printf("<D sing>, inpu:<%c>\n",*(input + sp.count));
 			input++;
-			while (input[sp.count] && (input[sp.count] != 39 || (input[sp.count] == 39 && input[sp.count - 1] == 92)))
+			while (input[sp.count] && input[sp.count] != 39)
 				sp.count++;
 		}
 		if (!sp.count)
 			break ;
-		// ft_printf("END {input: <%c> sp.count: <%d>}\n", *input, sp.count);
 		*cmd = ft_substr(input, 0, sp.count);
-		// ft_printf("Substr: <%s>\n\n\n", *cmd);
 		sp.parts++;
 		cmd++;
-		input += sp.count + 1;
+		input += sp.count;
 		sp.count = 0;
 	}
 	return (1);
@@ -160,37 +149,38 @@ ssize_t	parts_count(char *input)
 
 	init_sp(&sp);
 	while (input[sp.count])
-	while (input[sp.count])
 	{
-		while (input[sp.count] && input[sp.count] == 32)
+		while (input[sp.count] && (input[sp.count] == 32
+				|| input[sp.count] == '\f'
+				|| input[sp.count] == '\n' || input[sp.count] == '\r'
+				|| input[sp.count] == '\t' || input[sp.count] == '\v'))
 			sp.count++;
 		input += sp.count;
 		sp.count = 0;
-		if (input[sp.count] && input[sp.count] != 34 && input[sp.count] != 39)
+		if (input[sp.count] && (input[sp.count] != 34 && input[sp.count] != 39))
 		{
 			while (input[sp.count] && (input[sp.count] != 32
 					&& input[sp.count] != '\f'
 					&& input[sp.count] != '\n' && input[sp.count] != '\r'
-					&& input[sp.count] != '\t' && input[sp.count] != '\v'
-					&& (input[sp.count] != 34 || (input[sp.count] == 34 && *(input - 1) == 92))))
+					&& input[sp.count] != '\t' && input[sp.count] != '\v'))
 				sp.count++;
 		}
-		else if (input[sp.count] && input[sp.count] == 34 && *(input - 1) != 92)
+		else if (input[sp.count] && input[sp.count] == 34)
 		{
 			input++;
-			while (input[sp.count] && (input[sp.count] != 34 || (input[sp.count] == 34 && input[sp.count - 1] == 92)))
+			while (input[sp.count] && input[sp.count] != 34)
 				sp.count++;
 		}
-		else if (input[sp.count] && input[sp.count] == 39 && *(input - 1) != 92)
+		else if (input[sp.count] && input[sp.count] == 39)
 		{
 			input++;
-			while (input[sp.count] && (input[sp.count] != 39 || (input[sp.count] == 39 && input[sp.count - 1] == 92)))
+			while (input[sp.count] && input[sp.count] != 39)
 				sp.count++;
 		}
 		if (!sp.count)
 			break ;
 		sp.parts++;
-		input += sp.count + 1;
+		input += sp.count;
 		sp.count = 0;
 	}
 	return (sp.parts);
