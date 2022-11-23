@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/23 02:25:38 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/23 04:42:31 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 		cmd->path_comand = tmp;
 		check_cmd_while(pip, cmd);
 	}
+	else if (access(cmd->path_comand, X_OK))
+		exit (clean_exit(pip, error_msg(BSH, cmd->path_comand,
+					PMD, 1)));
 }
 
 static void	check_cmd_while(t_pipex *pip, t_cmds *cmd)

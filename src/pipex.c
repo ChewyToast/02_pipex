@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/23 02:24:25 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/23 04:53:19 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	second_part(t_pipex *pip)
 	get_path(pip, "PATH=");
 	check_file(*(pip->inputs->argv + (pip->inputs->argc - 1)), W_OK, pip);
 	pip->inputs->argv += pip->inputs->argc - 4;
-	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT | O_RDWR, 0666);
+	pip->inputs->outfd = open(*(pip->inputs->argv + 3), O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (pip->inputs->inpfd < 0)
 	{
 		error_msg(BSH, *(pip->inputs->argv + 3), CNO, 1);
