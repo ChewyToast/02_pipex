@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunomoll <brunomoll@student.42.fr>        +#+  +:+       +#+        */
+/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 20:49:46 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/20 02:07:32 by brunomoll        ###   ########.fr       */
+/*   Updated: 2022/11/23 05:08:38 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,16 @@ int	parts_fill(char **cmd, char *input)
 					&& input[sp.count] != '\t' && input[sp.count] != '\v'))
 				sp.count++;
 		}
-		else if (input[sp.count] && input[sp.count] == 34)
+		else if (input[sp.count] && input[sp.count] == 34 && input[sp.count - 1] != 92)
 		{
 			input++;
-			while (input[sp.count] && input[sp.count] != 34)
+			while (input[sp.count] && (input[sp.count] != 34 || (input[sp.count] == 34 && input[sp.count - 1] == 92)))
 				sp.count++;
 		}
-		else if (input[sp.count] && input[sp.count] == 39)
+		else if (input[sp.count] && input[sp.count] == 39 && input[sp.count - 1] != 92)
 		{
 			input++;
-			while (input[sp.count] && input[sp.count] != 39)
+			while (input[sp.count] && (input[sp.count] != 39 || (input[sp.count] == 39 && input[sp.count - 1] == 92)))
 				sp.count++;
 		}
 		if (!sp.count)
@@ -165,16 +165,16 @@ ssize_t	parts_count(char *input)
 					&& input[sp.count] != '\t' && input[sp.count] != '\v'))
 				sp.count++;
 		}
-		else if (input[sp.count] && input[sp.count] == 34)
+		else if (input[sp.count] && input[sp.count] == 34 && input[sp.count - 1] != 92)
 		{
 			input++;
-			while (input[sp.count] && input[sp.count] != 34)
+			while (input[sp.count] && (input[sp.count] != 34 || (input[sp.count] == 34 && input[sp.count - 1] == 92)))
 				sp.count++;
 		}
-		else if (input[sp.count] && input[sp.count] == 39)
+		else if (input[sp.count] && input[sp.count] == 39 && input[sp.count - 1] != 92)
 		{
 			input++;
-			while (input[sp.count] && input[sp.count] != 39)
+			while (input[sp.count] && (input[sp.count] != 39 || (input[sp.count] == 39 && input[sp.count - 1] == 92)))
 				sp.count++;
 		}
 		if (!sp.count)
