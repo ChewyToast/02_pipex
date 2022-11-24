@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/23 04:42:31 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/24 00:50:23 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,18 @@ static void	check_cmd_while(t_pipex *pip, t_cmds *cmd);
 
 void	get_path(t_pipex *pip, char *path_compare)
 {
-	while (*(pip->inputs->env))
+	size_t	count;
+
+	count = 0;
+	while (pip->inputs->env[count])
 	{
-		if (!ft_strncmp(*(pip->inputs->env), path_compare, 5))
+		if (!ft_strncmp(pip->inputs->env[count], path_compare, 5))
 			break ;
-		pip->inputs->env++;
+		count++;
 	}
-	if (*(pip->inputs->env))
+	if (pip->inputs->env[count])
 	{
-		pip->utils->path = ft_split(*(pip->inputs->env) + 5, ':');
+		pip->utils->path = ft_split(pip->inputs->env[count] + 5, ':');
 		if (!pip->utils->path)
 			exit (error_msg(NULL, "bash", MKO, 1));
 	}
@@ -55,6 +58,9 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 	char	*tmp;
 
 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
+	// int	i = 0;
+	// while (cmd->cmd[i])
+	// 	ft_printf("returned:<%s>\n", cmd->cmd[i++]);
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	cmd->path_comand = ft_substr(*(cmd->cmd), 0, ft_strlen(*(cmd->cmd)));
