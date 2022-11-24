@@ -6,38 +6,38 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/24 05:41:57 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/24 05:51:14 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "bmlib.h"
 
-// int	main(int argc, char **argv, char **env)
-// {
-// 	t_pipex	pip;
-// 	pid_t	pid;
-// 	// int		status;
+int	main(int argc, char **argv, char **env)
+{
+	t_pipex	pip;
+	pid_t	pid;
+	// int		status;
 
-// 	if (argc != 5)
-// 		exit (error_msg(NULL, "bash", INA, 1));
-// 	if (!init_pipex(argc, argv, env, &pip))
-// 		exit(error_msg(NULL, "bash", MKO, 1));
-// 	if (pipe(pip.utils->pipes) < 0)
-// 		exit (error_msg(NULL, "bash", ECP, clean_exit(&pip, 1)));
-// 	pid = fork();
-// 	if (pid < 0)
-// 		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
-// 	else if (!pid)
-// 		first_part(&pip);
-// 	// waitpid(pid, &status, 0);
-// 	if (dup2(pip.utils->pipes[0], 0) < 0)
-// 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
-// 	close(pip.utils->pipes[1]);
-// 	close(pip.utils->pipes[0]);
-// 	second_part(&pip);
-// 	return (0);
-// }
+	if (argc != 5)
+		exit (error_msg(NULL, "bash", INA, 1));
+	if (!init_pipex(argc, argv, env, &pip))
+		exit(error_msg(NULL, "bash", MKO, 1));
+	if (pipe(pip.utils->pipes) < 0)
+		exit (error_msg(NULL, "bash", ECP, clean_exit(&pip, 1)));
+	pid = fork();
+	if (pid < 0)
+		exit (error_msg(NULL, "bash", ECF, clean_exit(&pip, 1)));
+	else if (!pid)
+		first_part(&pip);
+	// waitpid(pid, &status, 0);
+	if (dup2(pip.utils->pipes[0], 0) < 0)
+		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
+	close(pip.utils->pipes[1]);
+	close(pip.utils->pipes[0]);
+	second_part(&pip);
+	return (0);
+}
 
 void	first_part(t_pipex *pip)
 {
@@ -88,39 +88,39 @@ void	second_part(t_pipex *pip)
 	exit (clean_exit(pip, 1));
 }
 
-int	main(int argc, char **argv, char **env)
-{
-	(void)argc;
-	(void)argv;
-	(void)env;
-	char	**rtrn;
-	char	command[] = "  awk \'\"\'\"\'{count++} END \\\\\'{print count}\'\"\'\"\'";
-	char	commandd[] = "awk \"{count++} END {printf \\\"count: %i\\\" , count}\"";
-	char	commanddd[] = "sed    \"s/And/But/\"";
-	char	commandddd[] = "./\"script space.sh\"";
-	// char	commanddddd[] = "echo \"s\"\"b\"";
-	char	commanddddd[] = "./\'\"\'\"\'script space.sh\'\"\'\"\'";
-	ft_printf("\n###########################################\n\n------INPUT:<%s>\n\n", command);
-	rtrn = ft_cmd_split("echo hi");
-	while(*rtrn)
-		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
-	// execle("/usr/bin/awk", "\"\'{count++} END {print count}\'\"", NULL, env);
-	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commandd);
-	rtrn = ft_cmd_split(commandd);
-	while(*rtrn)
-		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
-	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commanddd);
-	rtrn = ft_cmd_split(commanddd);
-	while(*rtrn)
-		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
-	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commandddd);
-	rtrn = ft_cmd_split(commandddd);
-	while(*rtrn)
-		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
-	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commanddddd);
-	rtrn = ft_cmd_split(commanddddd);
-	while(*rtrn)
-		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
-	// execve("/bin/echo", ft_cmd_split(commanddddd), env);
-	ft_printf("\n###########################################\n");
-}
+// int	main(int argc, char **argv, char **env)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	(void)env;
+// 	char	**rtrn;
+// 	char	command[] = "  awk \'\"\'\"\'{count++} END \\\\\'{print count}\'\"\'\"\'";
+// 	char	commandd[] = "awk \"{count++} END {printf \\\"count: %i\\\" , count}\"";
+// 	char	commanddd[] = "sed    \"s/And/But/\"";
+// 	char	commandddd[] = "./\"script space.sh\"";
+// 	// char	commanddddd[] = "echo \"s\"\"b\"";
+// 	char	commanddddd[] = "./\'\"\'\"\'script space.sh\'\"\'\"\'";
+// 	ft_printf("\n###########################################\n\n------INPUT:<%s>\n\n", command);
+// 	rtrn = ft_cmd_split("echo hi");
+// 	while(*rtrn)
+// 		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
+// 	// execle("/usr/bin/awk", "\"\'{count++} END {print count}\'\"", NULL, env);
+// 	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commandd);
+// 	rtrn = ft_cmd_split(commandd);
+// 	while(*rtrn)
+// 		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
+// 	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commanddd);
+// 	rtrn = ft_cmd_split(commanddd);
+// 	while(*rtrn)
+// 		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
+// 	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commandddd);
+// 	rtrn = ft_cmd_split(commandddd);
+// 	while(*rtrn)
+// 		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
+// 	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commanddddd);
+// 	rtrn = ft_cmd_split(commanddddd);
+// 	while(*rtrn)
+// 		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
+// 	// execve("/bin/echo", ft_cmd_split(commanddddd), env);
+// 	ft_printf("\n###########################################\n");
+// }

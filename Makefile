@@ -6,7 +6,7 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/23 02:25:22 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/24 05:49:15 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@
 
 NAME		=		pipex
 
-# FILES		=		ft_split_args.c parse_utils.c pipex.c split_utils.c utils1.c utils2.c
+FILES		=		ft_split_args.c parse_utils.c pipex.c split_utils.c utils1.c utils2.c
 
-FILES		=		pipex.c	\
-					utils1.c\
-					utils2.c\
-					ft_cmd_split.c
+# FILES		=		pipex.c	\
+# 					utils1.c\
+# 					utils2.c\
+# 					ft_cmd_split.c
 
 SRC			=		$(addprefix $(SRC_DIR)/, $(FILES))
 

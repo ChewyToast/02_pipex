@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 19:32:12 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/24 00:22:06 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/24 05:51:01 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,34 @@ void		check_file(char *file, int mode, t_pipex *pip);
 void		check_cmd(t_pipex *pip, t_cmds *cmd);
 
 //	--------ft_cmd_split.c
-char		**ft_cmd_split(char *input);
+// char		**ft_cmd_split(char *input);
+
+typedef struct s_split
+{
+	int	start;
+	int	end;
+	int	num_words;
+	int	i;
+}	t_split;
+
+typedef struct s_clean
+{
+	int	num_c;
+	int	len;
+	int	j;
+	char	*new_str;
+}	t_clean;
+
+#include "bmlib.h"
+
+char	**ft_split_args(char const *s, char c);
+
+char	*ft_simple_quotes_two(char const *s, t_split *spt);
+char	*ft_double_quotes_two(char const *s, t_split *spt);
+char	*ft_clean_char(char *str, char c, int i);
+char	*ft_simple_quotes(char const *s, t_split *spt);
+char	*ft_double_quotes(char const *s, t_split *spt);
+char	*ft_word(char const *s, t_split *spt, char c);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/24 00:50:23 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/24 05:53:29 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {
 	char	*tmp;
 
-	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
+	cmd->cmd = ft_split_args(*(pip->inputs->argv + 2), 32);
 	// int	i = 0;
 	// while (cmd->cmd[i])
 	// 	ft_printf("returned:<%s>\n", cmd->cmd[i++]);
@@ -77,7 +77,7 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 	}
 	else if (access(cmd->path_comand, X_OK))
 		exit (clean_exit(pip, error_msg(BSH, cmd->path_comand,
-					PMD, 1)));
+					PMD, 126)));
 }
 
 static void	check_cmd_while(t_pipex *pip, t_cmds *cmd)
