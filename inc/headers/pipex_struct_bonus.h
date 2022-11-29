@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_struct.h                                     :+:      :+:    :+:   */
+/*   pipex_struct_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 19:56:41 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/29 00:52:13 by bmoll-pe         ###   ########.fr       */
+/*   Created: 2022/11/29 00:01:10 by bmoll-pe          #+#    #+#             */
+/*   Updated: 2022/11/29 02:23:24 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_STRUCT_H
-# define PIPEX_STRUCT_H
+#ifndef PIPEX_STRUCT_BONUS_H
+# define PIPEX_STRUCT_BONUS_H
 
 # include <stdio.h>
 
@@ -19,7 +19,7 @@
 
 # include <fcntl.h>
 
-# include "pipex_struct.h"
+# include <sys/wait.h>
 
 typedef struct s_pipex	t_pipex;
 typedef struct s_input	t_input;
@@ -35,6 +35,7 @@ struct s_pipex
 
 struct s_input
 {
+	int		here_doc;
 	int		inpfd;
 	int		outfd;
 	int		argc;
@@ -51,7 +52,6 @@ struct s_cmds
 struct s_utils
 {
 	int		error;
-	int		pipes[2];
 	char	**path;
 	int		exit_status;
 };
@@ -62,10 +62,10 @@ struct s_utils
 # define CNF ": command not found"
 # define PMD ": Permission denied"
 # define BFD ": Bad file descriptor"
-# define ECP ": error creating pipe"
-# define ECF ": error creating fork"
+# define ECP ": Error creating pipe"
+# define ECF ": Error creating fork"
 # define NFD ": No such file or directory"
 # define INA ": Invalid number of arguments"
-# define MKO ": error trying to allocate memory"
+# define MKO ": Error trying to allocate memory"
 
 #endif

@@ -6,64 +6,79 @@
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/24 05:49:15 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/29 03:14:18 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# -include utls/defines.mk
-# -include utls/mandatory.mk
-# -include utls/bonus.mk
+NAME		=	pipex
 
-NAME		=		pipex
+NAME_BNS	=	pipex_bonus
 
-FILES		=		ft_split_args.c parse_utils.c pipex.c split_utils.c utils1.c utils2.c
+#	-------------------- Mandatory --------------------
+FILES		=	pipex.c			utils1.c		utils2.c	\
+				ft_split_args.c	parse_utils.c	split_utils.c
 
-# FILES		=		pipex.c	\
-# 					utils1.c\
-# 					utils2.c\
-# 					ft_cmd_split.c
+SRC			=	$(addprefix $(SRC_DIR)/, $(FILES))
 
-SRC			=		$(addprefix $(SRC_DIR)/, $(FILES))
+OBJS		=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
-OBJS		=		$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
+DEPS_PIPEX	=	$(addprefix $(DEPS_DIR)/, $(OBJS:.o=.d))
 
-DEPS_PIPEX	=		$(addprefix $(DEPS_DIR)/, $(OBJS:.o=.d))
+SRC_DIR		=	mandatory
 
-SRC_DIR		=		src
+#	-------------------- Bonus --------------------
+FILES_BNS	=	pipex_bonus.c			utils1_bonus.c		utils2_bonus.c	\
+				ft_split_args_bonus.c	parse_utils_bonus.c	split_utils_bonus.c
 
-MKF			=		Makefile
+SRC_BNS		=	$(addprefix $(SRC_DIR)/, $(FILES_BNS))
 
-OBJ_DIR		=		.obj
+OBJS_BNS	=	$(addprefix $(OBJ_DIR)/, $(FILES_BNS:.c=.o))
 
-DEPS_DIR	=		.deps
+DEPS_PIPEX_BNS	=	$(addprefix $(DEPS_DIR)/, $(OBJS_BNS:.o=.d))
 
-MAKE_LIB	=		inc/bmlib/
+SRC_DIR_BNS		=	bonus
 
-LIB			=		inc/bmlib/bmlib.a
+#	---------------------
 
-INCLUDE		=		-I inc/headers
+MKF			=	Makefile
 
-INCLUDE		+=		-I inc/bmlib
+OBJ_DIR		=	.obj
 
-GCC			=		gcc
+DEPS_DIR	=	.deps
 
-FLAGS		=		-Wall -Werror -Wextra
+MAKE_LIB	=	inc/bmlib/
 
-FLAGS_MMD	=		-Wall -Werror -Wextra -MMD -MP
+LIB			=	inc/bmlib/bmlib.a
 
-DEL_LINE =			\033[2K
+INCLUDE		=	-I inc/headers
 
-DEF_COLOR =			\033[0;39m
+INCLUDE		+=	-I inc/bmlib
 
-BROWN =				\033[38;2;184;143;29m
+GCC			=	gcc
 
-DARK_GRAY =			\033[38;5;234m
+FLAGS		=	-Wall -Werror -Wextra
 
-DARK_GREEN =		\033[1m\033[38;2;75;179;82m
+FLAGS_MMD	=	-Wall -Werror -Wextra -MMD -MP
+
+DEL_LINE	=	\033[2K
+
+DEF_COLOR	=	\033[0;39m
+
+BROWN		=	\033[38;2;184;143;29m
+
+DARK_GRAY	=	\033[38;5;234m
+
+DARK_GREEN	=	\033[1m\033[38;2;75;179;82m
 
 all:
 				@$(MAKE) -C $(MAKE_LIB)
+				@rm -rf $(OBJS_BNS) $(DEPS_BNS)
 				@$(MAKE) $(NAME)
+
+bonus:
+				@$(MAKE) -C $(MAKE_LIB)
+				@rm -rf $(OBJS) $(DEPS)
+				@$(MAKE) $(NAME_BNS)
 
 clean:
 				@rm -rf $(OBJ_DIR)
@@ -72,13 +87,14 @@ clean:
 
 fclean:
 				@$(MAKE) clean
-				@rm -f $(NAME)
+				@rm -f $(NAME) $(NAME_BNS)
 				@echo "Deleting pipex"
 
 fcleanall:
 				@$(MAKE) fclean -C $(MAKE_LIB)
 				@$(MAKE) clean
 				@rm -f $(NAME)
+				@rm -f $(NAME) $(NAME_BNS)
 				@echo "Deleting pipex"
 
 re:
@@ -86,7 +102,12 @@ re:
 				@$(MAKE) all
 
 $(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJS)
+				@rm -rf $(OBJS_BNS) $(DEPS_BNS)
 				@$(GCC) $(FLAGS) $(OBJS) $(LIB) -o $(NAME)
+				@echo "pipex compiled 🎋"
+
+$(NAME_BNS):	$(OBJ_DIR) $(DEPS_DIR) $(OBJS_BNS)
+				@$(GCC) $(FLAGS) $(OBJS_BNS) $(LIB) -o $(NAME)
 				@echo "pipex compiled 🎋"
 
 $(OBJ_DIR):
@@ -100,9 +121,15 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(LIB) $(MKF)
 				@echo "compilin pipex file: <$(notdir $<)>"
 				@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
 
+$(OBJ_DIR)/%.o:	$(SRC_DIR_BNS)/%.c $(LIB) $(MKF)
+				@$(GCC) $(FLAGS_MMD) $(INCLUDE) -c $< -o $@
+				@echo "compilin pipex file: <$(notdir $<)>"
+				@mv $(patsubst %.o, %.d, $@) $(DEPS_DIR)/
+
 $(LIB):
 				@$(MAKE) -C $(MAKE_LIB)
 
 -include $(DEPS)
+-include $(DEPS_BNS)
 
-.PHONY:		all clean fclean fcleanall re
+.PHONY:		all bonus clean fclean fcleanall re
