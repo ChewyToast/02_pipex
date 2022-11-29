@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:09:03 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/29 03:16:13 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/29 03:40:41 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	startup_fds(t_pipex *pip)
 			return ;
 		pip->inputs->inpfd = open(*(pip->inputs->argv + 1), O_RDONLY);
 		if (pip->inputs->inpfd < 0)
-			exit (clean_exit(pip, error_msg(BSH, *(pip->inputs->argv + 1), CNO, 1)));
+			exit (clean_exit(pip, error_msg(BSH, *(pip->inputs->argv + 1),
+						CNO, 1)));
 		if (dup2(pip->inputs->inpfd, 0) < 0)
 			exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	}
@@ -64,7 +65,6 @@ void	startup_fds(t_pipex *pip)
 int	here_doc(t_pipex *pip)
 {
 	pid_t	pid;
-	char	*read;
 	int		pipes[2];
 	int		status;
 
@@ -74,24 +74,7 @@ int	here_doc(t_pipex *pip)
 	if (pid < 0)
 		exit (error_msg(NULL, "bash", ECF, clean_exit(pip, 1)));
 	else if (!pid)
-	{
-		close(pipes[0]);
-		if (write(1, "> ", 2) < 0)
-			exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
-		read = get_next_line(0);
-		while (read && ft_strncmp(read, *(pip->inputs->argv + 2), ft_strlen(read) - 1))
-		{
-			// ft_printf("read: $%s$ || argv: $%s$", read, *(pip->inputs->argv + 2));
-			if (write(pipes[1], read, ft_strlen(read)) < 0)
-				exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
-			if (write(1, "> ", 2) < 0)
-				exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
-			read = get_next_line(0);
-		}
-		if (!read)
-			exit(error_msg(NULL, "pipex", MKO, 1));
-		exit (0);
-	}
+		extra_loop(pip, pipes);
 	close(pipes[1]);
 	waitpid(pid, &status, 0);
 	if (status)

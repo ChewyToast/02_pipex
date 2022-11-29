@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 01:08:37 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/29 02:41:58 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/29 03:40:32 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,26 @@ static int	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 	free(cmd->path_comand);
 	cmd->path_comand = tmp;
 	return (1);
+}
+
+void	extra_loop(t_pipex *pip, int *pipes)
+{
+	char	*read;
+
+	close(pipes[0]);
+	if (write(1, "> ", 2) < 0)
+		exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
+	read = get_next_line(0);
+	while (read && ft_strncmp(read, *(pip->inputs->argv + 2),
+			ft_strlen(read) - 1))
+	{
+		if (write(pipes[1], read, ft_strlen(read)) < 0)
+			exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
+		if (write(1, "> ", 2) < 0)
+			exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
+		read = get_next_line(0);
+	}
+	if (!read)
+		exit(error_msg(NULL, "pipex", MKO, 1));
+	exit (0);
 }
