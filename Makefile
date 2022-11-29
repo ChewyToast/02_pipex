@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
+#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/29 03:14:18 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/11/29 18:42:32 by bruno            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,10 @@ FLAGS		=	-Wall -Werror -Wextra
 
 FLAGS_MMD	=	-Wall -Werror -Wextra -MMD -MP
 
+GSU =			git submodule update
+
+GSU_FLAGS =		--remote --merge --recursive
+
 DEL_LINE	=	\033[2K
 
 DEF_COLOR	=	\033[0;39m
@@ -74,6 +78,10 @@ all:
 				@$(MAKE) -C $(MAKE_LIB)
 				@rm -rf $(OBJS_BNS) $(DEPS_BNS)
 				@$(MAKE) $(NAME)
+
+update:
+				@echo "$(DEF_COLOR)Updating submodules"
+				@$(GSU) $(GSU_FLAGS)
 
 bonus:
 				@$(MAKE) -C $(MAKE_LIB)
@@ -132,4 +140,4 @@ $(LIB):
 -include $(DEPS)
 -include $(DEPS_BNS)
 
-.PHONY:		all bonus clean fclean fcleanall re
+.PHONY:	all bonus update clean fclean fcleanall re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/29 02:03:04 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:26:51 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,13 @@ void	second_part(t_pipex *pip)
 // 	(void)argv;
 // 	(void)env;
 // 	char	**rtrn;
-// 	char	command[] = "  awk \'\"\'\"\'{count++} END \\\\\'{print
-//count}\'\"\'\"\'";
+// 	char	commanddddd[] = "  awk \'\"\'\"\'{count++} END \\\\\'{printcount}\'\"\'\"\'";
 // 	char	commandd[] = "awk \"{count++} END {printf \\\"count:
 //%i\\\" , count}\"";
 // 	char	commanddd[] = "sed    \"s/And/But/\"";
 // 	char	commandddd[] = "./\"script space.sh\"";
-// 	// char	commanddddd[] = "echo \"s\"\"b\"";
-// 	char	commanddddd[] = "./\'\"\'\"\'script space.sh\'\"\'\"\'";
+	// char	commanddddd[] = "echo \"s\"\"b\"";
+	// char	commanddddd[] = "./\'\"\'\"\'script space.sh\'\"\'\"\'";
 // 	ft_printf("\n###########################################\n\n
 //-----INPUT:<%s>\n\n", command);
 // 	rtrn = ft_cmd_split("echo hi");
@@ -122,11 +121,13 @@ void	second_part(t_pipex *pip)
 // 	rtrn = ft_cmd_split(commandddd);
 // 	while(*rtrn)
 // 		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
-// 	ft_printf("\n###########################################\n
-//------INPUT:<%s>\n\n", commanddddd);
-// 	rtrn = ft_cmd_split(commanddddd);
+// 	ft_printf("\n###########################################\n------INPUT:<%s>\n\n", commanddddd);
+// 	rtrn = ft_split_args(commanddddd, 32);
 // 	while(*rtrn)
 // 		ft_printf("RESULT[$]%s[$]\n", *(rtrn++));
+// 	execle("/usr/bin/awk", "awk", "\"", "\'{count++} END \\\\\'{printcount}\'", "\"", NULL, env);
+// 	// execve("/usr/bin/awk", ft_split_args(commanddddd, 32), env);
+// 	// execve("/usr/bin/echo", ft_split_args(commanddddd, 32), env);
 // 	// execve("/bin/echo", ft_cmd_split(commanddddd), env);
 // 	ft_printf("\n###########################################\n");
 // }
