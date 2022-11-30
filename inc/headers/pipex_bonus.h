@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:00:18 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 20:21:19 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:33:25 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void		check_cmd(t_pipex *pip, t_cmds *cmd);
 void		extra_loop(t_pipex *pip, int *pipes);
 
 //	--------ft_cmd_split.c
-char	**ft_cmd_split(char *input);
+char		**ft_cmd_split(char *input);
 
 #endif
