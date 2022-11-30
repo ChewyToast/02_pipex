@@ -6,106 +6,92 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:33:47 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/30 16:24:37 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:30:57 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bmlib.h"
 
-size_t	count_parts(char *input, size_t rtrn);
-_Bool	fill_parts(char *input, char **rtrn);
-int	ft_isscaped(char *str);
-int	ft_isquote(char *str, char quote);
-char	*smart_fill(char *input, char delim, size_t *count);
+static size_t	count_parts(char *input, size_t rtrn, int util);
+static _Bool	fill_parts(char *input, char **rtrn, int util, size_t count);
+int				ft_isquote(char *str, char quote);
+char			*smart_fill(char *input, char delim, size_t *count);
 
 char	**ft_cmd_split(char *input)
 {
 	char	**rtrn;
+	size_t	count;
 
-	rtrn = ft_calloc(sizeof(char *), count_parts(input, 0) + 1);
+	count = 0;
+	if (input)
+		count = count_parts(input, 0, 0);
+	rtrn = ft_calloc(sizeof(char *), count + 1);
 	if (!rtrn)
 		return (NULL);
-	if (!fill_parts(input, rtrn))
-		return (NULL); //Error exit have to be cleaned;
+	if (!fill_parts(input, rtrn, 0, 0))
+	{
+		if (rtrn)
+			while (count--)
+				free(*(rtrn++));
+		return (NULL);
+	}
 	return (rtrn);
-	
 }
 
-size_t	count_parts(char *input, size_t rtrn)
+static size_t	count_parts(char *input, size_t rtrn, int util)
 {
-	if (!*input)
-		return (rtrn);
-	while(*input)
+	while (*input)
 	{
-		if (ft_isquote(input, 39))
+		util = ft_isquote(input, 39);
+		if (!util)
+			util = ft_isquote(input, 34);
+		if (util)
 		{
 			input++;
-			while (*input && !ft_isquote(input, 39))
-				input++;
-			rtrn++;
-		}
-		else if (ft_isquote(input, 34))
-		{
-			input++;
-			while (*input && !ft_isquote(input, 34))
+			while (*input && !ft_isquote(input, util))
 				input++;
 			rtrn++;
 		}
 		else if (!ft_isspace(*input))
 		{
 			input++;
-			while (*input && !ft_isquote(input, 34) && !ft_isquote(input, 39))
+			while (*input && !ft_isspace(*input) && !ft_isquote(input, 34)
+				&& !ft_isquote(input, 39))
 				input++;
 			rtrn++;
 			if (*input == 34 || *input == 39)
 				input--;
 		}
-		input++;
+		if (*input)
+			input++;
 	}
-	// ft_printf("parts count: %d\n", rtrn);
 	return (rtrn);
 }
 
-_Bool	fill_parts(char *input, char **rtrn)
+static _Bool	fill_parts(char *input, char **rtrn, int util, size_t count)
 {
-	size_t	count;
-
-	count = 0;
-	while(*input)
+	while (*input)
 	{
-		if (ft_isquote(input, 39))
+		util = ft_isquote(input, 39);
+		if (!util)
+			util = ft_isquote(input, 34);
+		if (util)
 		{
-			// ft_printf("IS SIMPLE QUOTE!---------------------\n");
 			input++;
 			*rtrn = smart_fill((input), *(input - 1), &count);
 			if (!*rtrn && count)
 				return (0);
-			// ft_printf("1CMD: [$]%s[$]\n", *rtrn);
-			rtrn++;
-		}
-		else if (ft_isquote(input, 34))
-		{
-			// ft_printf("IS DOUBLE QUOTE!---------------------\n");
-			input++;
-			*rtrn = smart_fill((input), *(input - 1), &count);
-			if (!*rtrn && count)
-				return (0);
-			// ft_printf("n2CMD: [$]%s[$]\n", *rtrn);
 			rtrn++;
 		}
 		else if (!ft_isspace(*input))
 		{
-			// ft_printf("IS SPACE!---------------------\n");
 			*rtrn = smart_fill((input), 0, &count);
 			if (!*rtrn && count)
 				return (0);
 			if (input[count] == 34 || input[count] == 39)
 				input--;
-			// ft_printf("3CMD: [$]%s[$]\n", *rtrn);
 			rtrn++;
 		}
-		// else
-			// ft_printf("PASANDO DE: ]%c[\n", *input);
 		input += count;
 		count = 0;
 		if (*input)

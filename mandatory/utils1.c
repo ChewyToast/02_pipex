@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:13:20 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/16 16:35:43 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:32:43 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,47 @@ int	init_pipex(int argc, char **argv, char **env, t_pipex *pip)
 	return (1);
 }
 
+void	clean_execv(t_pipex *pip)
+{
+	size_t	iter;
+
+	if (close(pip->inputs->inpfd))
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
+	if (close(pip->utils->pipes[0]))
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
+	if (close(pip->utils->pipes[1]))
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
+	execve(pip->cmds->path_comand, pip->cmds->cmd, pip->inputs->env);
+	if (pip->utils->path)
+	{
+		iter = 0;
+		while (pip->utils->path[iter])
+			free(pip->utils->path[iter++]);
+		free(pip->utils->path);
+	}
+	clean_exit(pip, 1);
+	perror(NULL);
+	exit (1);
+}
+
+static void	extra_clean_exit(t_pipex *pip)
+{
+	size_t	iter;
+
+	if (pip->cmds)
+	{
+		iter = 0;
+		if (pip->cmds->cmd)
+		{
+			while (pip->cmds->cmd[iter])
+				free(pip->cmds->cmd[iter++]);
+			free(pip->cmds->cmd);
+		}
+		free(pip->cmds->path_comand);
+		free(pip->cmds);
+	}
+}
+
 int	clean_exit(t_pipex *pip, int ret)
 {
 	size_t	iter;
@@ -51,15 +92,7 @@ int	clean_exit(t_pipex *pip, int ret)
 			free(pip->utils->path[iter++]);
 		free(pip->utils->path);
 	}
-	if (pip->cmds)
-	{
-		iter = 0;
-		while (pip->cmds->cmd[iter])
-			free(pip->cmds->cmd[iter++]);
-		free(pip->cmds->path_comand);
-		free(pip->cmds->cmd);
-		free(pip->cmds);
-	}
+	extra_clean_exit(pip);
 	free(pip->utils);
 	free(pip->inputs);
 	return (ret);

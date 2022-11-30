@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/30 13:48:28 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:11:24 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	get_path(t_pipex *pip, char *path_compare)
 		if (!pip->utils->path)
 			exit (error_msg(NULL, "bash", MKO, 1));
 	}
+	else
+	{
+		pip->utils->path = ft_split(DEFPATH, ':');
+		if (!pip->utils->path)
+			exit (error_msg(NULL, "bash", MKO, 1));
+	}
 }
 
 void	check_file(char *file, int mode, t_pipex *pip)
@@ -52,6 +58,8 @@ void	check_file(char *file, int mode, t_pipex *pip)
 		}
 	}
 }
+
+// static void	check_script()
 
 void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {

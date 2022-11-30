@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 00:01:10 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/29 02:23:24 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:06:20 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ struct s_utils
 # define NFD ": No such file or directory"
 # define INA ": Invalid number of arguments"
 # define MKO ": Error trying to allocate memory"
+# define DEFPATH "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 19:32:12 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 17:40:32 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 20:42:05 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		second_part(t_pipex *pip);
 
 //	--------utils1.c
 int			init_pipex(int argc, char **argv, char **env, t_pipex *pip);
+void		clean_execv(t_pipex *pip);
 int			clean_exit(t_pipex *pip, int ret);
 int			error_msg(char *first, char *second, char *thrd, int ret);
 

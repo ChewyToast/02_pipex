@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 01:08:37 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 17:41:43 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:06:12 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ void	get_path(t_pipex *pip, char *path_compare)
 	if (pip->inputs->env[count])
 	{
 		pip->utils->path = ft_split(pip->inputs->env[count] + 5, ':');
+		if (!pip->utils->path)
+			exit (error_msg(NULL, "bash", MKO, 1));
+	}
+	else
+	{
+		pip->utils->path = ft_split(DEFPATH, ':');
 		if (!pip->utils->path)
 			exit (error_msg(NULL, "bash", MKO, 1));
 	}

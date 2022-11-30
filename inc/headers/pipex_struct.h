@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 19:56:41 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/29 00:52:13 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:06:16 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ struct s_utils
 # define PPX "pipex: "
 # define CNO ": Cannot open"
 # define CNF ": command not found"
+# define CNC ": Fd can not be closed"
 # define PMD ": Permission denied"
 # define BFD ": Bad file descriptor"
 # define ECP ": error creating pipe"
@@ -67,5 +68,6 @@ struct s_utils
 # define NFD ": No such file or directory"
 # define INA ": Invalid number of arguments"
 # define MKO ": error trying to allocate memory"
+# define DEFPATH "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
 #endif
