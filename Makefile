@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
+#    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/29 18:42:32 by bruno            ###   ########.fr        #
+#    Updated: 2022/11/30 16:31:52 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME_BNS	=	pipex_bonus
 
 #	-------------------- Mandatory --------------------
 FILES		=	pipex.c			utils1.c		utils2.c	\
-				ft_split_args.c	parse_utils.c	split_utils.c
+				ft_cmd_split.c	ft_split_utils.c
 
 SRC			=	$(addprefix $(SRC_DIR)/, $(FILES))
 
@@ -28,7 +28,7 @@ SRC_DIR		=	mandatory
 
 #	-------------------- Bonus --------------------
 FILES_BNS	=	pipex_bonus.c			utils1_bonus.c		utils2_bonus.c	\
-				ft_split_args_bonus.c	parse_utils_bonus.c	split_utils_bonus.c
+				ft_cmd_split_bonus.c	ft_split_utils_bonus.c
 
 SRC_BNS		=	$(addprefix $(SRC_DIR)/, $(FILES_BNS))
 
@@ -80,7 +80,7 @@ all:
 				@$(MAKE) $(NAME)
 
 update:
-				@echo "$(DEF_COLOR)Updating submodules"
+				@$(MAKE) update -C $(MAKE_LIB)
 				@$(GSU) $(GSU_FLAGS)
 
 bonus:

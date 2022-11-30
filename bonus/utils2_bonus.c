@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 01:08:37 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/29 03:40:32 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:41:43 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {
 	char	*tmp;
 
-	cmd->cmd = ft_split_args(*(pip->inputs->argv + 2), 32);
+	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	cmd->path_comand = ft_substr(*(cmd->cmd), 0, ft_strlen(*(cmd->cmd)));
