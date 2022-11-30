@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 01:08:37 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 23:19:46 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:29:25 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	extra_loop(t_pipex *pip, int *pipes)
 		exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
 	read = get_next_line(0);
 	while (read && (ft_strncmp(read, *(pip->inputs->argv + 2),
-			ft_strlen(read) - tmp)))
+				ft_strlen(read) - tmp)))
 	{
 		tmp = 0;
 		if (write(pipes[1], read, ft_strlen(read)) < 0)

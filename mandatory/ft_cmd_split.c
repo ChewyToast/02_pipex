@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:33:47 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/30 22:45:34 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:27:12 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static size_t	count_parts(char *input, size_t rtrn, int util)
 	return (rtrn);
 }
 
-
 static _Bool	fill_parts(char *input, char **rtrn, int util, size_t count)
 {
 	while (*input)
@@ -98,5 +97,5 @@ static _Bool	fill_parts(char *input, char **rtrn, int util, size_t count)
 		if (*input)
 			input++;
 	}
-	return (rtrn);
+	return (1);
 }
