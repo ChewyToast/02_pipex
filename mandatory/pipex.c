@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 21:55:00 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:02:50 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ void	second_part(t_pipex *pip)
 	if (dup2(pip->inputs->outfd, 1) < 0)
 		exit (error_msg(BSH, "2", BFD, clean_exit(pip, 1)));
 	if (!pip->utils->error)
-		execve(pip->cmds->path_comand, pip->cmds->cmd, pip->inputs->env);
+		execve(pip->cmds->pt_cmd, pip->cmds->cmd, pip->inputs->env);
 	exit (clean_exit(pip, 1));
 }

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 23:59:36 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 21:33:30 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:02:50 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	first_part(t_pipex *pip, int *pipes)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
 	close(pipes[0]);
 	close(pipes[1]);
-	execve(pip->cmds->path_comand, pip->cmds->cmd, pip->inputs->env);
+	execve(pip->cmds->pt_cmd, pip->cmds->cmd, pip->inputs->env);
 	perror(NULL);
 	exit (clean_exit(pip, 1));
 }
@@ -80,7 +80,7 @@ static void	second_part(t_pipex *pip)
 	check_cmd(pip, pip->cmds);
 	if (dup2(pip->inputs->outfd, 1) < 0)
 		exit (error_msg(BSH, "2", BFD, clean_exit(pip, 1)));
-	execve(pip->cmds->path_comand, pip->cmds->cmd, pip->inputs->env);
+	execve(pip->cmds->pt_cmd, pip->cmds->cmd, pip->inputs->env);
 	perror(NULL);
 	exit (clean_exit(pip, 1));
 }

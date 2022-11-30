@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/30 22:11:24 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:02:59 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	check_file(char *file, int mode, t_pipex *pip)
 	}
 }
 
-// static void	check_script()
-
 void	check_cmd(t_pipex *pip, t_cmds *cmd)
 {
 	char	*tmp;
@@ -68,25 +66,26 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 	cmd->cmd = ft_cmd_split(*(pip->inputs->argv + 2));
 	if (!cmd->cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
-	cmd->path_comand = ft_substr(*(cmd->cmd), 0, ft_strlen(*(cmd->cmd)));
-	if (!cmd->path_comand)
+	cmd->pt_cmd = ft_substr(*(cmd->cmd), 0, ft_strlen(*(cmd->cmd)));
+	if (!cmd->pt_cmd)
 		exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 	if (pip->utils->path)
 	{
-		tmp = ft_strjoin("/\0", cmd->path_comand);
+		tmp = ft_strjoin("/\0", cmd->pt_cmd);
 		if (!tmp)
 			exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
-		free(cmd->path_comand);
-		cmd->path_comand = tmp;
+		free(cmd->pt_cmd);
+		cmd->pt_cmd = tmp;
 		if (check_cmd_while(pip, cmd))
 			return ;
-		cmd->path_comand = ft_substr(tmp, 1, 0xffffffff);
+		cmd->pt_cmd = ft_substr(tmp, 1, 0xffffffff);
 		free(tmp);
 	}
-	if (access(cmd->path_comand, F_OK))
-		exit (clean_exit(pip, error_msg(PPX, cmd->path_comand, CNF, 127)));
-	if (access(cmd->path_comand, X_OK))
-		exit (clean_exit(pip, error_msg(BSH, cmd->path_comand, PMD, 126)));
+	if (access(cmd->pt_cmd, F_OK) || (ft_strnstr(cmd->pt_cmd, ".sh", 0xffffff)
+			&& !ft_strrchr(cmd->pt_cmd, '/')))
+		exit (clean_exit(pip, error_msg(PPX, cmd->pt_cmd, CNF, 127)));
+	if (access(cmd->pt_cmd, X_OK))
+		exit (clean_exit(pip, error_msg(BSH, cmd->pt_cmd, PMD, 126)));
 }
 
 static int	check_cmd_while(t_pipex *pip, t_cmds *cmd)
@@ -97,7 +96,7 @@ static int	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 	iter = 0;
 	while (pip->utils->path[iter])
 	{
-		tmp = ft_strjoin(pip->utils->path[iter], cmd->path_comand);
+		tmp = ft_strjoin(pip->utils->path[iter], cmd->pt_cmd);
 		if (!tmp)
 			exit (error_msg(NULL, "bash", MKO, clean_exit(pip, 1)));
 		if (!access(tmp, F_OK))
@@ -105,7 +104,7 @@ static int	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 			if (!access(tmp, X_OK))
 				break ;
 			free(tmp);
-			exit (clean_exit(pip, error_msg(BSH, cmd->path_comand,
+			exit (clean_exit(pip, error_msg(BSH, cmd->pt_cmd,
 						PMD, 1)));
 		}
 		free(tmp);
@@ -113,7 +112,7 @@ static int	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 	}
 	if (!pip->utils->path[iter])
 		return (0);
-	free(cmd->path_comand);
-	cmd->path_comand = tmp;
+	free(cmd->pt_cmd);
+	cmd->pt_cmd = tmp;
 	return (1);
 }

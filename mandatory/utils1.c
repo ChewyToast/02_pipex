@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:13:20 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/30 22:32:43 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:02:50 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	clean_execv(t_pipex *pip)
 		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
 	if (close(pip->utils->pipes[1]))
 		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
-	execve(pip->cmds->path_comand, pip->cmds->cmd, pip->inputs->env);
+	execve(pip->cmds->pt_cmd, pip->cmds->cmd, pip->inputs->env);
 	if (pip->utils->path)
 	{
 		iter = 0;
@@ -72,7 +72,7 @@ static void	extra_clean_exit(t_pipex *pip)
 				free(pip->cmds->cmd[iter++]);
 			free(pip->cmds->cmd);
 		}
-		free(pip->cmds->path_comand);
+		free(pip->cmds->pt_cmd);
 		free(pip->cmds);
 	}
 }
