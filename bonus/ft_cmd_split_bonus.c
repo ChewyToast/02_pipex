@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:33:47 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/30 22:31:10 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/02 12:05:37 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ char	**ft_cmd_split(char *input)
 	return (rtrn);
 }
 
+static void	extra_count_parts(char **input)
+{
+	if (**input)
+		*input += 1;
+}
+
 static size_t	count_parts(char *input, size_t rtrn, int util)
 {
 	while (*input)
@@ -62,10 +68,17 @@ static size_t	count_parts(char *input, size_t rtrn, int util)
 			if (*input == 34 || *input == 39)
 				input--;
 		}
-		if (*input)
-			input++;
+		extra_count_parts(&input);
 	}
 	return (rtrn);
+}
+
+static void	extra_fill_parts(char **input, size_t *count)
+{
+	*input += *count;
+	*count = 0;
+	if (**input)
+		*input += 1;
 }
 
 static _Bool	fill_parts(char *input, char **rtrn, int util, size_t count)
@@ -92,10 +105,7 @@ static _Bool	fill_parts(char *input, char **rtrn, int util, size_t count)
 				input--;
 			rtrn++;
 		}
-		input += count;
-		count = 0;
-		if (*input)
-			input++;
+		extra_fill_parts(&input, &count);
 	}
-	return (rtrn);
+	return (1);
 }
