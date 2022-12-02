@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 11:37:56 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 20:33:13 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:51:18 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bmlib.h"
+#include <stdlib.h>
 
 static int	ft_isscaped(char *str)
 {
@@ -30,9 +31,6 @@ static int	ft_isscaped(char *str)
 
 int	ft_isquote(char *str, char quote)
 {
-	size_t	count;
-
-	count = 0;
 	if (*str != quote)
 		return (0);
 	if (!ft_isscaped(str))

@@ -6,10 +6,11 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 11:37:56 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 23:29:06 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/01 01:20:11 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "bmlib.h"
 
 static int	ft_isscaped(char *str)
@@ -30,9 +31,6 @@ static int	ft_isscaped(char *str)
 
 int	ft_isquote(char *str, char quote)
 {
-	size_t	count;
-
-	count = 0;
 	if (*str != quote)
 		return (0);
 	if (!ft_isscaped(str))

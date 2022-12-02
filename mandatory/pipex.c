@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:55:19 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/12/02 18:21:09 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:49:09 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	first_part(t_pipex *pip)
 void	second_part(t_pipex *pip)
 {
 	get_path(pip, "PATH=");
-	if (!check_file(pip->inputs->argv[3], W_OK, pip))
+	if (!check_file(pip->inputs->argv[4], W_OK, pip))
 		exit (clean_exit(pip, pip->utils->error));
 	pip->inputs->argv += 1;
 	pip->inputs->outfd = open(*(pip->inputs->argv + 3),
