@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 01:08:37 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 23:29:25 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:46:22 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 		cmd->pt_cmd = ft_substr(tmp, 1, 0xffffffff);
 		free(tmp);
 	}
-	if (access(cmd->pt_cmd, F_OK) || (ft_strnstr(cmd->pt_cmd, ".sh", 0xffffff)
-			&& !ft_strrchr(cmd->pt_cmd, '/')))
+	if (access(cmd->pt_cmd, F_OK) || !ft_strrchr(cmd->pt_cmd, '/'))
 		exit (clean_exit(pip, error_msg(PPX, cmd->pt_cmd, CNF, 127)));
 	if (access(cmd->pt_cmd, X_OK))
 		exit (clean_exit(pip, error_msg(BSH, cmd->pt_cmd, PMD, 126)));

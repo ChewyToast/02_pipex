@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:49:07 by bruno             #+#    #+#             */
-/*   Updated: 2022/11/30 23:02:59 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/02 18:17:48 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,28 @@ void	get_path(t_pipex *pip, char *path_compare)
 	}
 }
 
-void	check_file(char *file, int mode, t_pipex *pip)
+int	check_file(char *file, int mode, t_pipex *pip)
 {
+	pip->utils->error = 1;
+	pip->utils->exit_status = 1;
 	if (mode == R_OK)
 	{
 		if (access(file, F_OK))
-			exit (error_msg("pipex: ", file, NFD, clean_exit(pip, 1)));
+			return (error_msg("pipex: ", file, NFD, 0));
 		else if (access(file, mode))
-			exit (error_msg("pipex: ", file, PMD, clean_exit(pip, 1)));
+			return (error_msg("pipex: ", file, PMD, 0));
 	}
 	else
 	{
 		if (!access(file, F_OK))
 		{
 			if (access(file, mode))
-				exit (error_msg(BSH, file, PMD, clean_exit(pip, 1)));
+				return (error_msg("hola", file, PMD, 0));
 		}
 	}
+	pip->utils->error = 0;
+	pip->utils->exit_status = 0;
+	return (1);
 }
 
 void	check_cmd(t_pipex *pip, t_cmds *cmd)
@@ -81,8 +86,7 @@ void	check_cmd(t_pipex *pip, t_cmds *cmd)
 		cmd->pt_cmd = ft_substr(tmp, 1, 0xffffffff);
 		free(tmp);
 	}
-	if (access(cmd->pt_cmd, F_OK) || (ft_strnstr(cmd->pt_cmd, ".sh", 0xffffff)
-			&& !ft_strrchr(cmd->pt_cmd, '/')))
+	if (access(cmd->pt_cmd, F_OK) || !ft_strrchr(cmd->pt_cmd, '/'))
 		exit (clean_exit(pip, error_msg(PPX, cmd->pt_cmd, CNF, 127)));
 	if (access(cmd->pt_cmd, X_OK))
 		exit (clean_exit(pip, error_msg(BSH, cmd->pt_cmd, PMD, 126)));

@@ -6,7 +6,7 @@
 /*   By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 19:32:12 by bmoll-pe          #+#    #+#             */
-/*   Updated: 2022/11/30 23:33:20 by bmoll-pe         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:31:16 by bmoll-pe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			error_msg(char *first, char *second, char *thrd, int ret);
 
 //	--------utils2.c
 void		get_path(t_pipex *pip, char *path_compare);
-void		check_file(char *file, int mode, t_pipex *pip);
+int			check_file(char *file, int mode, t_pipex *pip);
 void		check_cmd(t_pipex *pip, t_cmds *cmd);
 
 //	--------ft_cmd_split.c

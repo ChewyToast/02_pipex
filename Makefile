@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/11/30 16:31:52 by bmoll-pe         ###   ########.fr        #
+#    Updated: 2022/12/02 17:13:45 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC			=	$(addprefix $(SRC_DIR)/, $(FILES))
 
 OBJS		=	$(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
-DEPS_PIPEX	=	$(addprefix $(DEPS_DIR)/, $(OBJS:.o=.d))
+DEPS_PIPEX	=	$(addprefix $(DEPS_DIR)/, $(FILES:.c=.d))
 
 SRC_DIR		=	mandatory
 
@@ -34,13 +34,13 @@ SRC_BNS		=	$(addprefix $(SRC_DIR)/, $(FILES_BNS))
 
 OBJS_BNS	=	$(addprefix $(OBJ_DIR)/, $(FILES_BNS:.c=.o))
 
-DEPS_PIPEX_BNS	=	$(addprefix $(DEPS_DIR)/, $(OBJS_BNS:.o=.d))
+DEPS_PIPEX_BNS	=	$(addprefix $(DEPS_DIR)/, $(FILES_BNS:.c=.d))
 
 SRC_DIR_BNS		=	bonus
 
 #	---------------------
 
-MKF			=	Makefile
+MKF			=	makefile
 
 OBJ_DIR		=	.obj
 
@@ -137,7 +137,7 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR_BNS)/%.c $(LIB) $(MKF)
 $(LIB):
 				@$(MAKE) -C $(MAKE_LIB)
 
--include $(DEPS)
--include $(DEPS_BNS)
+-include $(DEPS_PIPEX)
+-include $(DEPS_PIPEX_BNS)
 
 .PHONY:	all bonus update clean fclean fcleanall re
