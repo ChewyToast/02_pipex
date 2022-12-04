@@ -64,6 +64,7 @@ struct s_utils
 # define BFD ": Bad file descriptor"
 # define ECP ": Error creating pipe"
 # define ECF ": Error creating fork"
+# define CNC ": Fd can not be closed"
 # define NFD ": No such file or directory"
 # define INA ": Invalid number of arguments"
 # define MKO ": Error trying to allocate memory"

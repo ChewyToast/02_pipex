@@ -74,8 +74,9 @@ int	here_doc(t_pipex *pip)
 	if (pid < 0)
 		exit (error_msg(NULL, "bash", ECF, clean_exit(pip, 1)));
 	else if (!pid)
-		extra_loop(pip, pipes);
-	close(pipes[1]);
+		extra_loop(pip, pipes, 1);
+	if (close(pipes[1]))
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
 	waitpid(pid, &status, 0);
 	if (status)
 		exit (clean_exit(pip, 1));

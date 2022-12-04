@@ -28,7 +28,7 @@ int			error_msg(char *first, char *second, char *thrd, int ret);
 void		get_path(t_pipex *pip, char *path_compare);
 int			check_file(char *file, int mode, t_pipex *pip);
 void		check_cmd(t_pipex *pip, t_cmds *cmd);
-void		extra_loop(t_pipex *pip, int *pipes);
+void		extra_loop(t_pipex *pip, int *pipes, int tmp);
 
 //	--------ft_cmd_split.c
 char		**ft_cmd_split(char *input);

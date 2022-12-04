@@ -56,7 +56,7 @@ int	check_file(char *file, int mode, t_pipex *pip)
 		if (!access(file, F_OK))
 		{
 			if (access(file, mode))
-				return (error_msg("hola", file, PMD, 0));
+				return (error_msg("pipex: ", file, PMD, 0));
 		}
 	}
 	pip->utils->error = 0;

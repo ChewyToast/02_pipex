@@ -121,13 +121,12 @@ static int	check_cmd_while(t_pipex *pip, t_cmds *cmd)
 	return (1);
 }
 
-void	extra_loop(t_pipex *pip, int *pipes)
+void	extra_loop(t_pipex *pip, int *pipes, int tmp)
 {
-	int		tmp;
 	char	*read;
 
-	tmp = 1;
-	close(pipes[0]);
+	if (close(pipes[0]) < 0)
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
 	if (write(1, "> ", 2) < 0)
 		exit (error_msg(BSH, "write", BFD, clean_exit(pip, 1)));
 	read = get_next_line(0);

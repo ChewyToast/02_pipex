@@ -13,7 +13,7 @@
 #include "pipex.h"
 #include "bmlib.h"
 
-static void	startup_fds(t_pipex *pip);
+static void	startup_fds(t_pipex *pip, int8_t mode);
 
 int	main(int argc, char **argv, char **env)
 {
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 		exit (error_msg(NULL, "bash", INA, 1));
 	if (!init_pipex(argc, argv, env, &pip))
 		exit(error_msg(NULL, "bash", MKO, 1));
-	startup_fds(&pip);
+	startup_fds(&pip, 1);
 	if (pipe(pip.utils->pipes) < 0)
 		exit (error_msg(NULL, "bash", ECP, clean_exit(&pip, 1)));
 	pid = fork();
@@ -35,8 +35,7 @@ int	main(int argc, char **argv, char **env)
 	pip.utils->error = 0;
 	if (dup2(pip.utils->pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(&pip, 1)));
-	close(pip.utils->pipes[1]);
-	close(pip.utils->pipes[0]);
+	startup_fds(&pip, 2);
 	second_part(&pip);
 	return (0);
 }
@@ -87,14 +86,24 @@ void	second_part(t_pipex *pip)
 	exit (clean_exit(pip, 1));
 }
 
-static void	startup_fds(t_pipex *pip)
+static void	startup_fds(t_pipex *pip, int8_t mode)
 {
-	if (!check_file(*(pip->inputs->argv + 1), R_OK, pip))
-		return ;
-	pip->inputs->inpfd = open(*(pip->inputs->argv + 1), O_RDONLY);
-	if (pip->inputs->inpfd < 0)
-		exit (clean_exit(pip, error_msg(BSH, *(pip->inputs->argv + 1),
-					CNO, 1)));
-	if (dup2(pip->inputs->inpfd, 0) < 0)
-		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
+	if (mode == 1)
+	{
+		if (!check_file(*(pip->inputs->argv + 1), R_OK, pip))
+			return ;
+		pip->inputs->inpfd = open(*(pip->inputs->argv + 1), O_RDONLY);
+		if (pip->inputs->inpfd < 0)
+			exit (clean_exit(pip, error_msg(BSH, *(pip->inputs->argv + 1),
+						CNO, 1)));
+		if (dup2(pip->inputs->inpfd, 0) < 0)
+			exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
+	}
+	else if (mode == 2)
+	{
+		if (close(pip->utils->pipes[1]))
+			exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
+		if (close(pip->utils->pipes[0]))
+			exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
+	}
 }

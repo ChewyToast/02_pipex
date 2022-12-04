@@ -54,8 +54,10 @@ static void	first_part(t_pipex *pip, int *pipes)
 	check_cmd(pip, pip->cmds);
 	if (dup2(pipes[1], 1) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
-	close(pipes[0]);
-	close(pipes[1]);
+	if (close(pipes[0]) < 0)
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
+	if (close(pipes[1]) < 0)
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
 	execve(pip->cmds->pt_cmd, pip->cmds->cmd, pip->inputs->env);
 	perror(NULL);
 	exit (clean_exit(pip, 1));
@@ -91,6 +93,8 @@ static void	prepare_next(t_pipex *pip, int *pipes)
 	pip->utils->error = 0;
 	if (dup2(pipes[0], 0) < 0)
 		exit (error_msg(BSH, "dup2", BFD, clean_exit(pip, 1)));
-	close(pipes[0]);
-	close(pipes[1]);
+	if (close(pipes[0]) < 0)
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
+	if (close(pipes[1]) < 0)
+		exit (clean_exit(pip, error_msg(PPX, "open", CNC, 1)));
 }
