@@ -3,16 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
+#    By: bmoll-pe <bmoll-pe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 18:59:54 by bmoll-pe          #+#    #+#              #
-#    Updated: 2022/12/02 22:51:38 by bruno            ###   ########.fr        #
+#    Updated: 2022/12/06 21:48:33 by bmoll-pe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	pipex
 
 NAME_BNS	=	pipex_bonus
+
+MANDATORY	=	.mandatory
+
+BONUSS		=	.bonus
 
 #	-------------------- Mandatory --------------------
 FILES		=	pipex.c			utils1.c		utils2.c	\
@@ -76,8 +80,7 @@ DARK_GREEN	=	\033[1m\033[38;2;75;179;82m
 
 all:
 				@$(MAKE) -C $(MAKE_LIB)
-				@rm -rf $(OBJS_BNS) $(DEPS_BNS)
-				@$(MAKE) $(NAME)
+				@$(MAKE) $(MANDATORY)
 
 update:
 				@$(MAKE) update -C $(MAKE_LIB)
@@ -85,8 +88,7 @@ update:
 
 bonus:
 				@$(MAKE) -C $(MAKE_LIB)
-				@rm -rf $(OBJS) $(DEPS)
-				@$(MAKE) $(NAME_BNS)
+				@$(MAKE) $(BONUSS)
 
 clean:
 				@rm -rf $(OBJ_DIR)
@@ -95,13 +97,14 @@ clean:
 
 fclean:
 				@$(MAKE) clean
+				@rm -f $(MANDATORY) $(BONUSS)
 				@rm -f $(NAME) $(NAME_BNS)
 				@echo "Deleting pipex"
 
 fcleanall:
 				@$(MAKE) fclean -C $(MAKE_LIB)
 				@$(MAKE) clean
-				@rm -f $(NAME)
+				@rm -f $(MANDATORY) $(BONUSS)
 				@rm -f $(NAME) $(NAME_BNS)
 				@echo "Deleting pipex"
 
@@ -109,13 +112,14 @@ re:
 				@$(MAKE) fclean
 				@$(MAKE) all
 
-$(NAME):		$(OBJ_DIR) $(DEPS_DIR) $(OBJS)
-				@rm -rf $(OBJS_BNS) $(DEPS_BNS)
+$(MANDATORY):	$(OBJ_DIR) $(DEPS_DIR) $(OBJS)
 				@$(GCC) $(FLAGS) $(OBJS) $(LIB) -o $(NAME)
+				@touch $(MANDATORY)
 				@echo "pipex compiled 🎋"
 
-$(NAME_BNS):	$(OBJ_DIR) $(DEPS_DIR) $(OBJS_BNS)
+$(BONUSS):		$(OBJ_DIR) $(DEPS_DIR) $(OBJS_BNS)
 				@$(GCC) $(FLAGS) $(OBJS_BNS) $(LIB) -o $(NAME)
+				@touch $(BONUSS)
 				@echo "pipex compiled 🎋"
 
 $(OBJ_DIR):
